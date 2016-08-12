@@ -13,8 +13,8 @@ if (mongo) {
   console.log("Some debug info:");
   console.log(mongo);
   var env = JSON.parse(mongo);
-  if (env['mongodb-2.4']) {
-    mongo = env['mongodb-2.4'][0]['credentials'];
+  if (env['mongodb']) {
+    mongo = env['mongodb'][0]['credentials'];
     if (mongo.url) {
       conn_str = mongo.url;
     } else {
