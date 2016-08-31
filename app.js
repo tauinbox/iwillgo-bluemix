@@ -43,6 +43,7 @@ db.once('open', function () {
   var newEvent = Events({
     title: 'MegaEvent!!!',
     description: 'Come on in everybody!',
+    eventDate: Date.now,
     place: {
       country: 'Somecountry',
       city: 'Somecity'

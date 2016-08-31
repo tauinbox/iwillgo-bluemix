@@ -36,6 +36,16 @@ var eventSchema = new Schema({
     createdBy: {
       type: [Schema.Types.ObjectId]
     },
+    eventDate: {
+      type: Date
+    },
+    ageRestrict: {
+      type: Number,
+      default: 0
+    },
+    joined: {
+      type: [Schema.Types.ObjectId]
+    },
     place: {
       type: [placeSchema]
     },
