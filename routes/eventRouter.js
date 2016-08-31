@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Events = require('../models/events');
 
-// var Verify = require('./verify');
+var Verify = require('./verify');
 
 var eventRouter = express.Router();
 
