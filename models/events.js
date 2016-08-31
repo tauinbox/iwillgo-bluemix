@@ -34,7 +34,7 @@ var eventSchema = new Schema({
         required: true
     },
     createdBy: {
-      type: [Schema.Types.ObjectId]
+      type: Schema.Types.ObjectId
     },
     eventDate: {
       type: Date
@@ -47,7 +47,7 @@ var eventSchema = new Schema({
       type: [Schema.Types.ObjectId]
     },
     place: {
-      type: [placeSchema]
+      type: placeSchema
     },
     comments: [commentSchema]
 }, {
