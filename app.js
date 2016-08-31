@@ -46,6 +46,7 @@ db.once('open', function () {
       author: 'Jameson' }]
   });
 
+  // add a comment
   newEvent.comments.push({
     body: 'Another stupid comment',
     author: 'Anonymous'
