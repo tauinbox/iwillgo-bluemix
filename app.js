@@ -66,8 +66,6 @@ db.once('open', function () {
 
 
   //-----------------------------------------------------------------
-});
-
 
 
 var routes = require('./routes/index');
