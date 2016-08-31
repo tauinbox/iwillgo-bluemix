@@ -37,7 +37,7 @@ var eventSchema = new Schema({
       type: [Schema.Types.ObjectId]
     },
     place: {
-      type: placeSchema
+      type: [placeSchema]
     },
     comments: [commentSchema]
 }, {
