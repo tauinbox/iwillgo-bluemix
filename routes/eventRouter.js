@@ -11,7 +11,7 @@ var eventRouter = express.Router();
 eventRouter.use(bodyParser.json());
 
 eventRouter.route('/')
-.get(Verify.verifyOrdinaryUser, function(req, res, next) {
+.get(function(req, res, next) {
   Events.find({}, function(err, events) {
     if (err) next(err);
     res.json(events);
