@@ -69,6 +69,11 @@ db.once('open', function () {
 
       // object of all the events
       console.log(events);
+      // first event
+      console.log(events[0]);
+      // console.log(events[0].comments);
+      // console.log(events[0].place);
+
       db.collection('events').drop(function () {
         db.close();
       });
