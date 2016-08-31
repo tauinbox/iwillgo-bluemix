@@ -7,29 +7,12 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var assert = require('assert');
 
+var config = require('./config.js');
+
 var Events = require('./models/events');
 
-var mongo = process.env.VCAP_SERVICES;
-var conn_str = "";
-
-if (mongo) {
-  var env = JSON.parse(mongo);
-  if (env['mongodb']) {
-    mongo = env['mongodb'][0]['credentials'];
-    if (mongo.url) {
-      conn_str = mongo.url;
-    } else {
-      console.log("No mongo found");
-    }  
-  } else {
-    conn_str = 'mongodb://localhost:27017';
-  }
-} else {
-  conn_str = 'mongodb://localhost:27017';
-}
-
 mongoose.Promise = global.Promise;
-mongoose.connect(conn_str);
+mongoose.connect(config.mongoUrl);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
