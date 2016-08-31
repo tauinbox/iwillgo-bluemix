@@ -42,19 +42,18 @@ db.once('open', function () {
       title: 'MegaEvent!!!',
       description: 'Come on in everybody!',
       comments: [{
-        rating: 3,
-        comment: 'This is insane',
+        body: 'This is insane',
         author: 'Matt Daemon' }]
   });
 
   // save the event
   newEvent.save(function (err) {
-    if (err) throw err;
+    if (err) next(err);
     console.log('Event created!');
 
     // get all the events
     Events.find({}, function (err, events) {
-      if (err) throw err;
+      if (err) next(err);
 
       // object of all the events
       console.log(events);

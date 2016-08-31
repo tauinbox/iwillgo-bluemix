@@ -8,7 +8,7 @@ var commentSchema = new Schema({
         required: true
     },
     author:  {
-        type: String,
+        type: String
     }
 }, {
     timestamps: true
@@ -17,7 +17,7 @@ var commentSchema = new Schema({
 var eventSchema = new Schema({
     title: {
         type: String,
-        required: true,
+        required: true
         // unique: true
     },
     description: {
