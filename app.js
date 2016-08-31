@@ -48,7 +48,7 @@ db.once('open', function () {
 
   newEvent.comments.push({
     body: 'Another stupid comment',
-    author: 'Anonymous' }
+    author: 'Anonymous'
   });
 
   // save the event
