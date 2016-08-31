@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var assert = require('assert');
+
+var Events = require('./models/events');
 
 var mongo = process.env.VCAP_SERVICES;
 var conn_str = "";
@@ -32,6 +35,37 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   // we're connected
   console.log('Connected correctly to mongodb server');
+
+      // create a new events
+    var newEvent = Events({
+        title: 'MegaEvent!!!',
+        description: 'Come on in everybody!',
+        comments: [{
+          rating: 3,
+          comment: 'This is insane',
+          author: 'Matt Daemon' }]
+    });
+
+    // save the event
+    newEvent.save(function (err) {
+        if (err) throw err;
+        console.log('Event created!');
+
+        // get all the events
+        Events.find({}, function (err, events) {
+            if (err) throw err;
+
+            // object of all the events
+            console.log(events);
+                        db.collection('events').drop(function () {
+                db.close();
+            });
+        });
+    });
+});
+
+
+  //-----------------------------------------------------------------
 });
 
 
