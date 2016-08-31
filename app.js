@@ -36,36 +36,35 @@ db.once('open', function () {
   // we're connected
   console.log('Connected correctly to mongodb server');
 
-      // create a new events
-    var newEvent = Events({
-        title: 'MegaEvent!!!',
-        description: 'Come on in everybody!',
-        comments: [{
-          rating: 3,
-          comment: 'This is insane',
-          author: 'Matt Daemon' }]
-    });
+    //   // create a new events
+    // var newEvent = Events({
+    //     title: 'MegaEvent!!!',
+    //     description: 'Come on in everybody!',
+    //     comments: [{
+    //       rating: 3,
+    //       comment: 'This is insane',
+    //       author: 'Matt Daemon' }]
+    // });
 
-    // save the event
-    newEvent.save(function (err) {
-        if (err) throw err;
-        console.log('Event created!');
+    // // save the event
+    // newEvent.save(function (err) {
+    //   if (err) throw err;
+    //   console.log('Event created!');
 
-        // get all the events
-        Events.find({}, function (err, events) {
-            if (err) throw err;
+    //   // get all the events
+    //   Events.find({}, function (err, events) {
+    //     if (err) throw err;
 
-            // object of all the events
-            console.log(events);
-                        db.collection('events').drop(function () {
-                db.close();
-            });
-        });
-    });
+    //     // object of all the events
+    //     console.log(events);
+    //     db.collection('events').drop(function () {
+    //       db.close();
+    //     });
+    //   });
+    // });
+
 });
 
-
-  //-----------------------------------------------------------------
 
 
 var routes = require('./routes/index');
