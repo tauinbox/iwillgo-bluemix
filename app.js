@@ -74,9 +74,8 @@ db.once('open', function () {
 
       // log first event
       console.log(events[0]);
-      // console.log(events[0].comments);
-      // console.log(events[0].place);
 
+      //clear collection
       db.collection('events').drop(function () {
         db.close();
       });
