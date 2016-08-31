@@ -44,6 +44,7 @@ db.once('open', function () {
     title: 'MegaEvent!!!',
     description: 'Come on in everybody!',
     // eventDate: Date.now,
+    ageRestrict: 18,
     place: {
       country: 'Somecountry',
       city: 'Somecity'
