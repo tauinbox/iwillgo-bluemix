@@ -37,10 +37,16 @@ db.once('open', function () {
   // we're connected
   console.log('Connected correctly to mongodb server');
 
-  // create a new events
+  // SCHEMAS TESTING --------------------------
+
+  // create a new event
   var newEvent = Events({
     title: 'MegaEvent!!!',
     description: 'Come on in everybody!',
+    place: {
+      country: 'Somecountry',
+      city: 'Somecity'
+    },
     comments: [{
       body: 'The first comment',
       author: 'Jameson' }]
@@ -68,6 +74,8 @@ db.once('open', function () {
       });
     });
   });
+
+  // SCHEMAS TESTING --------------------------
 
 });
 

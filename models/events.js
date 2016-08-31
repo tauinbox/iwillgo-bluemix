@@ -3,15 +3,24 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var commentSchema = new Schema({
-    body:  {
-        type: String,
-        required: true
-    },
-    author:  {
-        type: String
-    }
+  body:  {
+    type: String,
+    required: true
+  },
+  author:  {
+    type: String
+  }
 }, {
     timestamps: true
+});
+
+var placeSchema = new Schema({
+  country: {
+    type: String
+  },
+  city: {
+    type: String
+  }
 });
 
 var eventSchema = new Schema({
@@ -23,6 +32,12 @@ var eventSchema = new Schema({
     description: {
         type: String,
         required: true
+    },
+    createdBy: {
+      type: [Schema.Types.ObjectId]
+    },
+    place: {
+      type: placeSchema
     },
     comments: [commentSchema]
 }, {
