@@ -39,11 +39,16 @@ db.once('open', function () {
 
   // create a new events
   var newEvent = Events({
-      title: 'MegaEvent!!!',
-      description: 'Come on in everybody!',
-      comments: [{
-        body: 'This is insane',
-        author: 'Matt Daemon' }]
+    title: 'MegaEvent!!!',
+    description: 'Come on in everybody!',
+    comments: [{
+      body: 'The first comment',
+      author: 'Jameson' }]
+  });
+
+  newEvent.comments.push({
+    body: 'Another stupid comment',
+    author: 'Anonymous' }
   });
 
   // save the event
