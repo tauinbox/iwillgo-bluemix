@@ -68,8 +68,9 @@ db.once('open', function () {
       if (err) next(err);
 
       // object of all the events
-      console.log(events);
-      // first event
+      // console.log(events);
+
+      // log first event
       console.log(events[0]);
       // console.log(events[0].comments);
       // console.log(events[0].place);
