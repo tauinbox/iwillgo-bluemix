@@ -18,14 +18,15 @@ eventRouter.route('/')
   });
 })
 
-.post(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
+.post(Verify.verifyOrdinaryUser, function(req, res, next) {
+  req.body.createdBy = req.decoded._doc._id;
   Events.create(req.body, function(err, event) {
     if (err) next(err);
-    console.log('Dish created!');
-    var id = event._id;
-
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Added the event with id: ' + id);
+    console.log('Event created!');
+    // var id = event._id;
+    // res.writeHead(200, {'Content-Type': 'text/plain'});
+    // res.end('Added the event with id: ' + id);
+    res.json(event);
   });
 })
 
@@ -39,7 +40,7 @@ eventRouter.route('/')
 //////////////////////////////////////////////
 
 eventRouter.route('/:eventId')
-.get(function(req, res, next) {
+.get(Verify.verifyOrdinaryUser, function(req, res, next) {
   Events.findById(req.params.eventId, function(err, event) {
     if (err) next(err);
     res.json(event);
