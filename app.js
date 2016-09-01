@@ -1,3 +1,4 @@
+// extern modules
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,13 +7,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var assert = require('assert');
 
+//local modules
+var authenticate = require('./authenticate');
 var config = require('./config.js');
 
-var Events = require('./models/events');
+//models
+var Event = require('./models/event');
+var User = require('./models/user');
 
+// connection to db
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoUrl);
 
@@ -22,13 +26,14 @@ db.once('open', function () {
   // we're connected
   console.log('Connected correctly to mongodb server');
 
-  // SCHEMAS TESTING --------------------------
+  // DB seeding --------------------------
 
-  // clear collection
+  // clear collections
   db.collection('events').drop(function () {});
+  db.collection('users').drop(function () {});
 
   // create a new event
-  var newEvent = Events({
+  var newEvent = Event({
     title: 'MegaEvent!!!',
     description: 'Come on in everybody!',
     // eventDate: Date.now,
@@ -38,24 +43,22 @@ db.once('open', function () {
       city: 'Somecity'
     },
     comments: [{
-      body: 'The first comment',
-      author: 'Jameson' }]
+      body: 'The first comment'}]
   });
 
   // add a comment
   newEvent.comments.push({
-    body: 'Another stupid comment',
-    author: 'Anonymous'
+    body: 'Another stupid comment'
   });
 
   // save the event
   newEvent.save(function (err) {
-    if (err) next(err);
+    if (err) return next(err);
     console.log('Event created!');
 
     // get all the events
-    Events.find({}, function (err, events) {
-      if (err) next(err);
+    Event.find({}, function (err, events) {
+      if (err) return next(err);
 
       // object of all the events
       // console.log(events);
@@ -70,14 +73,21 @@ db.once('open', function () {
     });
   });
 
-  // SCHEMAS TESTING --------------------------
+  // User.create({
+  //   username: 'admin',
+  //   password: 'password',
+  //   admin: true }, 
+  //   function(err, user) {
+  //     if (err) return next(err);
+  //     console.log(user);
+  // });
+
+  // DB seeding --------------------------
 
 });
 
-
-
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var userRouter = require('./routes/userRouter');
 var eventRouter = require('./routes/eventRouter');
 
 var app = express();
@@ -93,17 +103,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// passport config
-var User = require('./models/user');
+// passport init
 app.use(passport.initialize());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
+//serving static data in folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/users', userRouter);
 app.use('/events', eventRouter);
 
 // catch 404 and forward to error handler

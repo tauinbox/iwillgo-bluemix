@@ -36,7 +36,7 @@ exports.verifyOrdinaryUser = function(req, res, next) {
 };
 
 exports.verifyAdmin = function(req, res, next) {
-  var adm = req.decoded._doc.admin;
+  var adm = req.decoded.admin;
   console.log("Admin check: " + adm);
 
   if (!adm) {
