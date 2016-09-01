@@ -64,7 +64,7 @@ db.once('open', function () {
       // console.log(events);
 
       // log first event
-      console.log(events[0]);
+      // console.log(events[0]);
 
       //clear collection
       // db.collection('events').drop(function () {

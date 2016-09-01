@@ -18,6 +18,21 @@ var User = new Schema({
   admin:   {
     type: Boolean,
     default: false
+  },
+  email: {
+    type: String,
+    default: ''
+  },
+  userpic: {
+    type: String,
+    default: ''
+  },
+  dateOfBirth: {
+    type: Date,
+  },
+  friends: {
+    type: [Schema.Types.ObjectId],
+    ref: 'User'
   }
 });
 
