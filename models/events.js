@@ -7,8 +7,9 @@ var commentSchema = new Schema({
     type: String,
     required: true
   },
-  author:  {
-    type: String
+  postedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 }, {
     timestamps: true
@@ -34,7 +35,8 @@ var eventSchema = new Schema({
         required: true
     },
     createdBy: {
-      type: Schema.Types.ObjectId
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
     eventDate: {
       type: Date
@@ -44,7 +46,8 @@ var eventSchema = new Schema({
       default: 0
     },
     joined: {
-      type: [Schema.Types.ObjectId]
+      type: [Schema.Types.ObjectId],
+      ref: 'User'
     },
     place: {
       type: placeSchema
