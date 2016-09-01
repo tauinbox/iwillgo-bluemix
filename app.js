@@ -73,14 +73,10 @@ db.once('open', function () {
     });
   });
 
-  // User.create({
-  //   username: 'admin',
-  //   password: 'password',
-  //   admin: true }, 
-  //   function(err, user) {
-  //     if (err) return next(err);
-  //     console.log(user);
-  // });
+  // create the Admin user
+  User.register(new User({ username: "admin" }), "password", function(err, user) {
+    user.save(function(err,user) {});
+  });
 
   // DB seeding --------------------------
 
