@@ -111,14 +111,15 @@ app.use(passport.initialize());
 if (app.get('env') === 'development') {
   // This will change in production since we'll be using the dist folder
   // This covers serving up the index page
-  app.use(express.static(path.join(__dirname, '.tmp')));
-  app.use(express.static(path.join(__dirname, 'app')));
+  // app.use(express.static(path.join(__dirname, 'client/.tmp')));
+  app.use(express.static(path.join(__dirname, 'client/app')));
+  app.use(express.static(path.join(__dirname, 'client')));
 }
 
 // production Angular folder (client-side)
 if (app.get('env') === 'production') {
   // changes it to use the optimized version for production
-  app.use(express.static(path.join(__dirname, 'dist')));  
+  app.use(express.static(path.join(__dirname, 'client/dist')));  
 }
 
 app.use('/', index);
