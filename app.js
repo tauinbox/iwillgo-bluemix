@@ -84,15 +84,15 @@ db.once('open', function () {
 
 });
 
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var userRouter = require('./routes/userRouter');
 var eventRouter = require('./routes/eventRouter');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -105,9 +105,23 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 //serving static data in folder
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+// development Angular folder (client-side)
+if (app.get('env') === 'development') {
+  // This will change in production since we'll be using the dist folder
+  // This covers serving up the index page
+  app.use(express.static(path.join(__dirname, '.tmp')));
+  app.use(express.static(path.join(__dirname, 'app')));
+}
+
+// production Angular folder (client-side)
+if (app.get('env') === 'production') {
+  // changes it to use the optimized version for production
+  app.use(express.static(path.join(__dirname, 'dist')));  
+}
+
+app.use('/', index);
 app.use('/users', userRouter);
 app.use('/events', eventRouter);
 
@@ -123,6 +137,8 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+  console.log("we're now in the development mode");
+
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.json({
@@ -133,14 +149,18 @@ if (app.get('env') === 'development') {
 }
 
 // production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({
-    message: err.message,
-    error: {}
+if (app.get('env') === 'production') {
+  console.log("we're now in the production mode");
+
+  // no stacktraces leaked to user
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.json({
+      message: err.message,
+      error: {}
+    });
   });
-});
+}
 
 
 module.exports = app;
