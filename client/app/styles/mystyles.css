@@ -59,6 +59,8 @@ body {
 
 .navbar-nav > li> .dropdown-menu li a:hover {
   color: #5ac9ff;
+  background: #004363;
+  border-radius: 5px;  
 }
 
 #navlist {
