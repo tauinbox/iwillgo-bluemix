@@ -52,6 +52,10 @@ angular.module('iwgApp')
   $scope.openLogin = function() {
     ngDialog.open({ template: 'views/login.html', scope: $scope, className: 'ngdialog-theme-default', controller:"LoginController" });
   };
+
+  $scope.openRegister = function () {
+    ngDialog.open({ template: 'views/register.html', scope: $scope, className: 'ngdialog-theme-default', controller: "RegisterController" });
+  };  
   
   $scope.logOut = function() {
     AuthFactory.logout();
