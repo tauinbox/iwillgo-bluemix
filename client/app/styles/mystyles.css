@@ -53,6 +53,14 @@ body {
   border-radius: 5px;
 }
 
+.navbar-nav > li > .dropdown-menu {
+  background: #006699;
+}
+
+.navbar-nav > li> .dropdown-menu li a:hover {
+  color: #5ac9ff;
+}
+
 #navlist {
   margin-top: 25px;
 }
