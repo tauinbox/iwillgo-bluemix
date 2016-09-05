@@ -28,9 +28,9 @@
         <hr ng-if="!loggedIn" class="visible-xs">
         <li ng-if="loggedIn" ng-class="{active: stateis('app.friends')}"><a ng-click="#"><i class="fa fa-users" aria-hidden="true"></i> Friends</a></li>
         <hr ng-if="loggedIn" class="visible-xs">
-        <li ng-if="loggedIn"><a>{{username}}</a></li>
+        <li ng-if="loggedIn"><a><i class="fa fa-user" aria-hidden="true"></i> {{username}}</a></li>
         <hr ng-if="loggedIn" class="visible-xs">
-        <li ng-if="loggedIn"><a ng-click="logOut()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+<!--         <li ng-if="loggedIn"><a ng-click="logOut()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li> -->
       </ul>
     </div>
 
