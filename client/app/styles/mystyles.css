@@ -1,34 +1,95 @@
-.row-header {
-  margin: 0px auto;
-  padding: 0px 0px;
-}
-.row-content {
-  margin: 0px auto;
-  padding: 50px 0px;
-  border-bottom: 1px ridge;
-  min-height: 400px;
-}
-.row-footer {
-  margin: 0px auto;
-  padding: 20px 0px;
-  background-color: #AfAfAf;
+/*#iwg-logo {
+  background-image: url(images/iwg-logo.png);
+  background-size: 100%;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+}*/
+
+body {
+  background-color: #006699;
+  margin-top: 100px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
-.carousel {
-  background: #1a237e;
+/*HEADER*/
+
+#navbar {
+  padding-bottom: 5px;
 }
-.carousel .item {
-  height: 300px;
-}
-.carousel .item img {
-  left: 0;
-  min-height: 300px;
-  position: absolute;
-  top: 0;
-}
+
 .navbar-inverse {
-  background: #303f9f;
-  color: #ffffff;
+  background: #006699;
+  border-color: white;
+}
+
+.nav.navbar-nav.navbar-right li a {
+  color: white;
+  font-size: 1.5em;
+}
+
+.nav.navbar-nav.navbar-right li a:hover {
+  color: #5ac9ff;
+/*  background-color: #004363;
+  border-radius: 5px;*/
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+  color: #5ac9ff;
+  background: #004363;
+  border-radius: 5px;
+}
+
+.navbar-inverse .navbar-nav > .active > a:hover {
+  color: #5ac9ff;
+  background: #004363;
+  border-radius: 5px;
+}
+
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: #5ac9ff;
+  background: #004363;
+  border-radius: 5px;
+}
+
+#navlist {
+  margin-top: 25px;
+}
+
+.navbar-header .navbar-brand a {
+  color: white;
+  font-family: 'Kaushan Script', cursive;
+  font-size: 1.5em;
+  text-shadow: 2px 2px 2px #000;
+}
+
+div.navbar-brand a h1{
+  margin: 15px;
+}
+
+div.navbar-brand {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+ul#navlist {
+  margin-top: 12px;
+}
+
+.navbar-header .navbar-brand a:hover {
+  color: #5ac9ff;
+}
+
+.navbar-brand a:hover, .navbar-brand a:focus {
+  text-decoration: none;
+}
+
+/*------------*/
+
+/*.navbar-inverse {
+  background: #006699;
+  border-color: white;
 }
 .navbar-inverse .navbar-nav > .active > a {
   background: #1a237e;
@@ -64,28 +125,97 @@
 .navbar-inverse .navbar-nav .open .dropdown-menu {
   background-color: #303f9f;
   color: #eeeeee;
+}*/
+
+/*FOOTER*/
+
+#footer {
+  background-color: #006699;
+  color: #FFF1D5;
 }
-address {
-  color: #0f0f0f;
-  font-size: 80%;
-  margin: 0px;
+
+#footer p {
+  margin: 10px;
 }
-body {
-  align: center;
-  padding: 50px 0px 0px 0px;
-  z-index: 0;
+
+#footer hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.tab-content {
-  border-bottom: 1px solid #dddddd;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
-  padding: 10px;
+
+#social a {
+  color: white;
 }
-.affix {
-  top: 100px;
+
+#linkedin:hover {
+  color: #FFFFFF;
+  background-color: #1F89BE;
 }
-#carouselButtons {
-  bottom: 0px;
-  position: absolute;
-  right: 0px;
+
+#github:hover {
+  color: black;
+  background-color: #F5F5F5;
+}
+
+
+/*RESPONSIVE DESIGN*/
+
+@media (max-width: 1199px) {
+  .nav.navbar-nav.navbar-right li a { /*MENU FONT SIZE*/
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 991px) {
+  .nav.navbar-nav.navbar-right li a { /*MENU FONT SIZE*/
+    font-size: 1em;
+  }
+  #cockroach-logo {
+    display: none;
+  }
+  div.navbar-brand a h1{ /*BRAND NAME FONT SIZE*/
+    margin-top: 10px;
+    margin-left: 0px;
+    font-size: 1.2em;
+  }
+  ul#navlist {
+    margin-top: 5px;
+  }
+  body {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  #navbar ul {
+    margin: 0px;
+  }  
+  #navbar li {
+    text-align: center;
+  }
+  #navbar ul hr {
+    margin: 0px;
+  }
+  div.navbar-brand a h1{
+    margin-top: 5px;
+  }
+  body {
+    margin-top: 70px;
+  }    
+}
+
+@media (max-width: 443px) {
+  div.navbar-brand {
+    height: 50px;
+  }
+  div.navbar-brand a h1{ /*BRAND NAME FONT SIZE*/
+    margin-top: 10px;
+    font-size: .9em;
+  }
+  #linkedin, #github {
+    display: none;
+  }
+  body {
+    margin-top: 65px;
+  }     
 }
