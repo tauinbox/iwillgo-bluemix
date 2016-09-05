@@ -35,6 +35,12 @@ body {
   border-radius: 5px;*/
 }
 
+.nav.navbar-nav.navbar-right li a:focus {
+  color: #5ac9ff;
+  background: #004363;
+  border-radius: 5px;
+}
+
 .navbar-inverse .navbar-nav > .active > a {
   color: #5ac9ff;
   background: #004363;
