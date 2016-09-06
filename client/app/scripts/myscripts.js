@@ -1,8 +1,8 @@
-$(document).ready(function() {
-  $('#navbarToggle').on('blur', function() {
+jQuery(document).ready(function() {
+  jQuery('#navbarToggle').on('blur', function() {
     var screenWidth = window.innerWidth;
     if (screenWidth < 768) {
-      $("#navbar").collapse('hide');
+      jQuery("#navbar").collapse('hide');
     }
   });
 });
