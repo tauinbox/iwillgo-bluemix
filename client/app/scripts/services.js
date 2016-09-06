@@ -3,7 +3,7 @@
 angular.module('iwgApp')
 .constant("baseURL", "http://iwillgo.mybluemix.net/")
 
-.factory('eventFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+.factory('eventsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
   return $resource(baseURL + "events/:id", null, {
     'update': {
@@ -13,7 +13,7 @@ angular.module('iwgApp')
 
 }])
 
-.factory('commentFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+.factory('commentsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
   return $resource(baseURL + "events/:id/comments/:commentId", {id: "@Id", commentId: "@CommentId"}, {
     'update': {
@@ -40,7 +40,7 @@ angular.module('iwgApp')
     getObject: function(key, defaultValue) {
       return JSON.parse($window.localStorage[key] || defaultValue);
     }
-  }
+  };
 }])
 
 .factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
@@ -54,7 +54,7 @@ angular.module('iwgApp')
 
   function loadUserCredentials() {
     var credentials = $localStorage.getObject(TOKEN_KEY,'{}');
-    if (credentials.username != undefined) {
+    if (credentials.username !== undefined) {
       useCredentials(credentials);
     }
   }
@@ -99,7 +99,7 @@ angular.module('iwgApp')
               response.data.err.name + '</p></div>' +
             '<div class="ngdialog-buttons">\
               <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm("OK")>OK</button>\
-            </div>'
+            </div>';
         
             ngDialog.openConfirm({ template: message, plain: 'true'});
          }

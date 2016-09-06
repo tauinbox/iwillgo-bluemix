@@ -2,9 +2,9 @@
 
 angular.module('iwgApp')
 
-.controller('EventController', ['$scope', 'eventFactory', function ($scope, eventFactory) {
+.controller('EventController', ['$scope', 'eventsFactory', function ($scope, eventsFactory) {
 
-  eventFactory.query(
+  eventsFactory.query(
     function (response) {
       $scope.events = response;
     },
@@ -13,7 +13,7 @@ angular.module('iwgApp')
     });
 }])
 
-.controller('EventDetailController', ['$scope', '$state', '$stateParams', 'eventFactory', 'commentFactory', function($scope, $state, $stateParams, eventFactory, commentFactory) {
+.controller('EventDetailController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory) {
 
   // $scope.event = {};
   $scope.message = "Loading ...";
@@ -30,13 +30,13 @@ angular.module('iwgApp')
 
   $scope.submitComment = function () {
 
-    commentFactory.save({id: $stateParams.id}, $scope.mycomment);
+    commentsFactory.save({id: $stateParams.id}, $scope.mycomment);
     $state.go($state.current, {}, {reload: true});
     $scope.commentForm.$setPristine();
     $scope.mycomment = {
       comment: ""
     };
-  }
+  };
 }])
 
 .controller('HeaderController', ['$scope', '$state', '$rootScope', 'ngDialog', 'AuthFactory', function($scope, $state, $rootScope, ngDialog, AuthFactory) {
