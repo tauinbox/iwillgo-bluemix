@@ -23,7 +23,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
 
     })
 
-    // route for the contactus page
+    // route for the friends page
     .state('app.friends', {
       url:'friends',
       views: {
@@ -34,7 +34,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
       }
     })
 
-    // route for the menu page
+    // route for the profile page
     .state('app.profile', {
       url: 'profile',
       views: {
@@ -45,7 +45,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
       }
     })
 
-    // route for the dishdetail page
+    // route for the eventdetails page
     .state('app.eventdetails', {
       url: 'event/:id',
       views: {

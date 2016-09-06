@@ -30,10 +30,10 @@
         <hr ng-if="loggedIn" class="visible-xs">
         <li ng-if="loggedIn" class="dropdown" ng-class="{active: stateis('app.profile')}" id="profileTab">
           <a href="#profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-user" aria-hidden="true"></i> {{username}} <span class="caret"></span>
+            <i class="fa fa-user" aria-hidden="true"></i> Profile <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#profile"><i class="fa fa-cog" aria-hidden="true"></i> Profile</a></li>
+            <li><a href="#editprofile"><i class="fa fa-cog" aria-hidden="true"></i> {{username}} </a></li>
             <li role="separator" class="divider"></li>
             <li><a ng-click="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
           </ul>
