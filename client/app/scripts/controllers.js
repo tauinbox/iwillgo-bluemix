@@ -66,10 +66,7 @@ angular.module('iwgApp')
   $scope.collapseMenu = function() {
     var screenWidth = window.innerWidth;
     if (screenWidth < 768) {
-      console.log("Profile Tab: ");
-      console.log(jQuery("#profileTab").is(":focus"));
-      console.log(jQuery("#profileTab").hasClass("active"));
-      if (!jQuery("#profileTab").is(":focus")) {
+      if (!jQuery("#profileTab").hasClass("active")) {
         jQuery("#navbar").collapse('hide');
       }
     }
