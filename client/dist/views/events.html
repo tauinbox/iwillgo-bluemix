@@ -1,32 +1,24 @@
 
   <div class="container">
 
-    <div class="row">
+    <div class="row row-content">
       <div class="col-xs-12">
-       <h3>Events</h3>
-       <hr>
+        <h1 align="center">Events</h1>
       </div>
     </div>
 
     <div class="row row-content">
-      <div class="col-xs-12">
-      <!-- <p>Test</p> -->
-     
-        <div class="tab-content">
-          <ul class="media-list tab-pane fade in active">
-            <li class="media" ng-repeat="event in events">
-              <div class="media-left media-middle">
-                <a ui-sref="app.eventdetails({id: event._id})">details</a>
-              </div>
-              <div class="media-body">
-                <h2 class="media-heading">{{event.title}}</h2>
-                <p>{{event.description}}</p>
-              </div>
-            </li>
-          </ul>
+      <div ng-repeat="event in events" class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title">{{event.title}}</h4>
         </div>
-
+        <div class="panel-body">
+          {{event.description}}
+        </div>
+        <div class="panel-footer">
+          <a ui-sref="app.eventdetails({id: event._id})">Show</a>
+        </div>
       </div>
-    </div>
+    </div>    
 
   </div>
