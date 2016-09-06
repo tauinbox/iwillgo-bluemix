@@ -173,6 +173,17 @@ ul#navlist {
   background-color: #F5F5F5;
 }
 
+/*ROW CONTENT*/
+
+.row-content h1 {
+  color: #5ac9ff;
+  margin-top: 0px;
+}
+
+.row-content > div.panel.panel-primary {
+  margin-left: 10px;
+  margin-right: 10px;  
+}
 
 /*RESPONSIVE DESIGN*/
 
@@ -186,9 +197,9 @@ ul#navlist {
   .nav.navbar-nav.navbar-right li a { /*MENU FONT SIZE*/
     font-size: 1em;
   }
-  #cockroach-logo {
+/*  #iwg-logo {
     display: none;
-  }
+  }*/
   div.navbar-brand a h1{ /*BRAND NAME FONT SIZE*/
     margin-top: 10px;
     margin-left: 0px;
