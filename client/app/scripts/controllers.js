@@ -89,7 +89,22 @@ angular.module('iwgApp')
   });
   
   $scope.stateis = function(curstate) {
-    return $state.is(curstate);  
+    var stateMatched = $state.is(curstate);
+    if (!stateMatched) {
+      var screenWidth = window.innerWidth;
+      if (screenWidth < 768) {
+
+        console.log("Is Profile Tab active?");
+        console.log(jQuery("#profileTab").hasClass("active"));
+
+        if (!jQuery("#profileTab").hasClass("active")) {
+          setTimeout(function() {
+            jQuery("#navbar").collapse('hide');
+          }, 1000);
+        }
+      }      
+    }
+    return stateMatched;  
   };
     
 }])
