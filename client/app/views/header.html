@@ -28,7 +28,7 @@
         <hr ng-if="!loggedIn" class="visible-xs">
         <li ng-if="loggedIn" ng-class="{active: stateis('app.friends')}"><a href="#friends"><i class="fa fa-users" aria-hidden="true"></i> Friends</a></li>
         <hr ng-if="loggedIn" class="visible-xs">
-        <li ng-if="loggedIn" class="dropdown" ng-class="{active: stateis('app.profile')}">
+        <li ng-if="loggedIn" ng-blur="collapseMenu2()" class="dropdown" ng-class="{active: stateis('app.profile')}">
           <a href="#profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-user" aria-hidden="true"></i> {{username}} <span class="caret"></span>
           </a>

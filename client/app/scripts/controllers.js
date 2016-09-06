@@ -66,9 +66,18 @@ angular.module('iwgApp')
   $scope.collapseMenu = function() {
     var screenWidth = window.innerWidth;
     if (screenWidth < 768) {
-      jQuery("#navbar").collapse('hide');
+      if (!$state.is('app.profile')) {
+        jQuery("#navbar").collapse('hide');
+      }
     }
   };
+
+  $scope.collapseMenu2 = function() {
+    var screenWidth = window.innerWidth;
+    if (screenWidth < 768) {
+      jQuery("#navbar").collapse('hide');
+    }
+  };  
   
   $rootScope.$on('login:Successful', function() {
     $scope.loggedIn = AuthFactory.isAuthenticated();
