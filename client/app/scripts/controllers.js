@@ -66,11 +66,11 @@ angular.module('iwgApp')
   $scope.collapseMenu = function() {
     var screenWidth = window.innerWidth;
     if (screenWidth < 768) {
-      
+
       console.log("--------------");
       console.log("Is Profile Tab active?");
       console.log(jQuery("#profileTab").hasClass("active"));
-      console.log($state);
+      console.log($state.current.name);
       console.log("--------------");
 
       // if (!jQuery("#profileTab").hasClass("active")) {
