@@ -67,7 +67,7 @@ angular.module('iwgApp')
     var screenWidth = window.innerWidth;
     if (screenWidth < 768) {
       setTimeout(function() {
-        console.log($state.current.name);
+        // console.log($state.current.name);
         if (!$state.is('app.profile')) {
           jQuery("#navbar").collapse('hide');
         }
