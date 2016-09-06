@@ -71,7 +71,9 @@ angular.module('iwgApp')
       console.log(jQuery("#profileTab").hasClass("active"));
 
       if (!jQuery("#profileTab").hasClass("active")) {
-        jQuery("#navbar").collapse('hide');
+        setTimeout(function() {
+          jQuery("#navbar").collapse('hide');
+        }, 1000);
       }
     }
   };  
