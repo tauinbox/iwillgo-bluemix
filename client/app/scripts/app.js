@@ -14,7 +14,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
         },
         'content': {
           templateUrl : 'views/events.html',
-          controller  : 'EventController'
+          controller  : 'EventsController'
         },
         'footer': {
           templateUrl : 'views/footer.html',
@@ -51,7 +51,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
       views: {
         'content@': {
           templateUrl : 'views/eventdetails.html',
-          controller  : 'EventDetailController'
+          controller  : 'EventDetailsController'
        }
       }
     })

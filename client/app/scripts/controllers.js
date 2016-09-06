@@ -2,7 +2,7 @@
 
 angular.module('iwgApp')
 
-.controller('EventController', ['$scope', 'eventsFactory', function ($scope, eventsFactory) {
+.controller('EventsController', ['$scope', 'eventsFactory', function ($scope, eventsFactory) {
 
   eventsFactory.query(
     function (response) {
@@ -13,7 +13,7 @@ angular.module('iwgApp')
     });
 }])
 
-.controller('EventDetailController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory) {
+.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory) {
 
   // $scope.event = {};
   $scope.message = "Loading ...";
@@ -118,5 +118,17 @@ angular.module('iwgApp')
     ngDialog.close();
 
   };
+}])
+
+.controller('ProfileController', ['$scope', function($scope) {
+    
+  $scope.message={};
+
+}])
+
+.controller('FriendsController', ['$scope', function($scope) {
+    
+  $scope.message={};
+
 }])
 ;
