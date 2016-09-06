@@ -62,6 +62,13 @@ angular.module('iwgApp')
     $scope.loggedIn = false;
     $scope.username = '';
   };
+
+  $scope.collapseMenu = function() {
+    var screenWidth = window.innerWidth;
+    if (screenWidth < 768) {
+      jQuery("#navbar").collapse('hide');
+    }
+  };
   
   $rootScope.$on('login:Successful', function() {
     $scope.loggedIn = AuthFactory.isAuthenticated();
