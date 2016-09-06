@@ -74,11 +74,12 @@ angular.module('iwgApp')
       console.log("--------------");
 
       // if (!jQuery("#profileTab").hasClass("active")) {
-      if (!$state.is('app.profile')) {
-        setTimeout(function() {
+      setTimeout(function() {
+        console.log($state.current.name);
+        if (!$state.is('app.profile')) {
           jQuery("#navbar").collapse('hide');
-        }, 1000);
-      }
+        }
+      }, 1000);
     }
   };  
   
