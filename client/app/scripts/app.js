@@ -29,7 +29,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
       views: {
         'content@': {
           templateUrl : 'views/friends.html',
-          controller  : 'FriendsController'                  
+          controller  : 'UsersController'                  
         }
       }
     })
@@ -44,6 +44,17 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
         }
       }
     })
+
+    // route for the editprofile page
+    .state('app.editprofile', {
+      url: 'editprofile',
+      views: {
+        'content@': {
+          templateUrl : 'views/editprofile.html',
+          controller  : 'ProfileController'
+        }
+      }
+    })    
 
     // route for the eventdetails page
     .state('app.eventdetails', {
