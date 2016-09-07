@@ -15,7 +15,43 @@ router.route('/')
     if (err) return next(err);
     res.json(users);
   });
+});
+
+router.route('/:userId')
+.get(Verify.verifyOrdinaryUser, function(req, res, next) {
+  User.findById(req.params.userId, function(err, user) {
+    if (err) return next(err);
+    // console.log(user);
+    if (req.params.userId != req.decoded._id) {
+      var err = new Error('You are not authorized to perform this operation!');
+      err.status = 403;
+      return next(err);
+    }    
+    res.json(user);
+  });
 })
+
+.put(Verify.verifyOrdinaryUser, function(req, res, next) {
+  User.findById(req.params.userId, function(err, user) {
+    if (err) return next(err);
+    if (req.params.userId != req.decoded._id) {
+      var err = new Error('You are not authorized to perform this operation!');
+      err.status = 403;
+      return next(err);
+    }
+    // update fields from req.body
+    user.firstname = req.body.firstname;
+    user.lastname = req.body.lastname;
+    user.email = req.body.email;
+    user.status = req.body.status;
+
+    user.save(function (err, user) {
+      if (err) return next(err);
+      console.log('User updated!');
+      res.json(user);
+    });    
+  });
+});
 
 router.post('/register', function(req, res) {
   User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
@@ -33,8 +69,8 @@ router.post('/register', function(req, res) {
 
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-    console.log(req.body); // to remove (temporary)
-    console.log(user); // to remove (temporary)
+    // console.log(req.body);
+    // console.log(user);
     if (err) return next(err);
     if (!user) return res.status(401).json({ err: info });
 
@@ -50,6 +86,7 @@ router.post('/login', function(req, res, next) {
       res.status(200).json({
         status: 'Login successful!',
         success: true,
+        userid: user._id,
         token: token
       });
     });
