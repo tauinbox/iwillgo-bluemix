@@ -39,6 +39,40 @@ angular.module('iwgApp')
   };
 }])
 
+.controller('UsersController', ['$scope', 'usersFactory', function ($scope, usersFactory) {
+
+  usersFactory.query(
+    function (response) {
+      $scope.users = response;
+    },
+    function (response) {
+      $scope.message = "Error: " + response.status + " " + response.statusText;
+    });
+}])
+
+.controller('ProfileController', ['$scope', '$state', '$stateParams', 'usersFactory', 'AuthFactory', function ($scope, $state, $stateParams, usersFactory, AuthFactory) {
+
+  var userid = AuthFactory.getUserId();
+  // console.log(userid);
+
+  $scope.user = usersFactory.get({ id: userid })
+    .$promise.then(
+      function(response) {
+        $scope.user = response;
+      },
+      function(response) {
+        $scope.message = "Error: " + response.status + " " + response.statusText;
+      }
+  );
+
+  $scope.submitProfile = function() {
+    usersFactory.update({id: userid}, $scope.user);
+    // $state.go($state.current, {}, {reload: true});
+    $state.go('app.profile');
+  }
+
+}])
+
 .controller('HeaderController', ['$scope', '$state', '$rootScope', 'ngDialog', 'AuthFactory', function($scope, $state, $rootScope, ngDialog, AuthFactory) {
 
   $scope.loggedIn = false;
@@ -125,15 +159,4 @@ angular.module('iwgApp')
   };
 }])
 
-.controller('ProfileController', ['$scope', function($scope) {
-    
-  $scope.message={};
-
-}])
-
-.controller('FriendsController', ['$scope', function($scope) {
-    
-  $scope.message={};
-
-}])
 ;
