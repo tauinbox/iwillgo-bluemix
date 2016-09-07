@@ -2,6 +2,7 @@
 
 angular.module('iwgApp')
 .constant("baseURL", "http://iwillgo.mybluemix.net/")
+// .constant("baseURL", "http://localhost:3000/")
 
 .factory('eventsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
@@ -16,6 +17,16 @@ angular.module('iwgApp')
 .factory('commentsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
   return $resource(baseURL + "events/:id/comments/:commentId", {id: "@Id", commentId: "@CommentId"}, {
+    'update': {
+      method: 'PUT'
+    }
+  });
+
+}])
+
+.factory('usersFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+
+  return $resource(baseURL + "users/:id", null, {
     'update': {
       method: 'PUT'
     }
@@ -49,6 +60,7 @@ angular.module('iwgApp')
   var TOKEN_KEY = 'Token';
   var isAuthenticated = false;
   var username = '';
+  var userid = '';
   var authToken = undefined;
     
 
@@ -67,6 +79,7 @@ angular.module('iwgApp')
   function useCredentials(credentials) {
     isAuthenticated = true;
     username = credentials.username;
+    userid = credentials.userid;
     authToken = credentials.token;
  
     // Set the token as header for your requests!
@@ -86,12 +99,13 @@ angular.module('iwgApp')
     $resource(baseURL + "users/login")
       .save(loginData,
         function(response) {
-          storeUserCredentials({username:loginData.username, token: response.token});
+          storeUserCredentials({ username: loginData.username, token: response.token, userid: response.userid });
+          // console.log(response);
           $rootScope.$broadcast('login:Successful');
         },
         function(response){
           isAuthenticated = false;
-          console.log(response);
+          // console.log(response);
           var message = '\
             <div class="ngdialog-message">\
             <div><h3>Login Unsuccessful</h3></div>' +
@@ -141,6 +155,10 @@ angular.module('iwgApp')
     authFac.getUsername = function() {
       return username;  
     };
+
+    authFac.getUserId = function() {
+      return userid;  
+    };    
 
     loadUserCredentials();
     
