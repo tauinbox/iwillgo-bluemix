@@ -76,7 +76,7 @@ db.once('open', function () {
   // create the Admin user
   User.register(new User({ username: "admin", admin: true, firstname: "Admin", lastname: "Admin" }), "password", function(err, user) {
     user.save(function(err,user) {
-      console.log(user);
+      // console.log(user);
     });
   });
 
