@@ -1,1 +1,34 @@
-<h1>Test Friends page</h1>
+
+  <div class="container">
+
+    <div class="row row-content">
+      <div class="col-xs-12">
+        <h1 align="center">Friends</h1>
+      </div>
+    </div>
+
+    <div class="row row-content">
+      <div class="form-group col-xs-12 col-sm-10">
+        <input id="lunch-menu" type="text" placeholder="enter username" class="form-control" ng-model="searchString">
+      </div>
+      <div class="form-group col-xs-12 col-sm-2">
+        <button class="btn btn-default" ng-click="findUser()">Search</button>
+      </div>
+
+      <div>
+        <h1 align="center">{{message}}</h1>
+      </div>
+    </div>
+
+    <div class="row row-content">
+      <div ng-repeat="friend in friends" class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title">{{friend.username}}</h4>
+        </div>
+        <div class="panel-body">
+          {{friend.firstname}} {{friend.lastname}}
+        </div>
+      </div>
+    </div>    
+
+  </div>

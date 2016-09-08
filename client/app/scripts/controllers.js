@@ -89,7 +89,7 @@ angular.module('iwgApp')
     usersFactory.update({id: userid}, $scope.user);
     // $state.go($state.current, {}, {reload: true});
     $state.go('app.profile', {}, { reload: true });
-  }
+  };
 
 }])
 
