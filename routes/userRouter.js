@@ -10,12 +10,13 @@ var Verify    = require('./verify');
 // });
 
 router.route('/')
-.get(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
+.get(Verify.verifyOrdinaryUser, function(req, res, next) {
   User.find({}, function(err, users) {
     if (err) return next(err);
     res.json(users);
   });
-});
+})
+;
 
 router.route('/:userId')
 .get(Verify.verifyOrdinaryUser, function(req, res, next) {
@@ -51,7 +52,29 @@ router.route('/:userId')
       res.json(user);
     });    
   });
-});
+})
+;
+
+router.route('/:userId/friends')
+.get(Verify.verifyOrdinaryUser, function(req, res, next) {
+  User.findById(req.params.userId, function(err, user) {
+    if (err) return next(err);
+    res.json(user.friends);
+  });
+})
+
+.post(Verify.verifyOrdinaryUser, function(req, res, next) {
+  User.findById(req.params.userId, function(err, user) {
+    if (err) return next(err);
+    user.friends.push(req.body);
+    user.save(function(err, user) {
+      if (err) return next(err);
+      console.log('Added new friend!');
+      res.json(user);
+    });    
+  });
+})
+;
 
 router.post('/register', function(req, res) {
   User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
@@ -95,9 +118,7 @@ router.post('/login', function(req, res, next) {
 
 router.get('/logout', function(req, res) {
   req.logout();
-  res.status(200).json({
-    status: 'Bye!'
-  });
+  res.status(200).json({ status: 'Bye!' });
 });
 
 // router.get('/facebook', passport.authenticate('facebook'), function(req, res){});
