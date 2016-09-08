@@ -34,6 +34,18 @@ angular.module('iwgApp')
 
 }])
 
+.factory('friendsFactory', ['$resource', 'baseURL', 'AuthFactory', function($resource, baseURL, AuthFactory) {
+
+  var userid = AuthFactory.getUserId();
+
+  return $resource(baseURL + "users/" + userid + "/friends/:friendId", null, {
+    'update': {
+      method: 'PUT'
+    }
+  });
+
+}])
+
 .factory('$localStorage', ['$window', function($window) {
   return {
     store: function(key, value) {
@@ -61,7 +73,7 @@ angular.module('iwgApp')
   var isAuthenticated = false;
   var username = '';
   var userid = '';
-  var authToken = undefined;
+  var authToken;
     
 
   function loadUserCredentials() {
@@ -89,6 +101,7 @@ angular.module('iwgApp')
   function destroyUserCredentials() {
     authToken = undefined;
     username = '';
+    userid = '';
     isAuthenticated = false;
     $http.defaults.headers.common['x-access-token'] = authToken;
     $localStorage.remove(TOKEN_KEY);
@@ -121,8 +134,7 @@ angular.module('iwgApp')
     };
     
     authFac.logout = function() {
-      $resource(baseURL + "users/logout").get(function(response){
-      });
+      $resource(baseURL + "users/logout").get(function(response) {});
       destroyUserCredentials();
     };
     
