@@ -29,7 +29,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
       views: {
         'content@': {
           templateUrl : 'views/friends.html',
-          controller  : 'UsersController'                  
+          controller  : 'FriendsController'                  
         }
       }
     })
