@@ -50,6 +50,26 @@ angular.module('iwgApp')
     });
 }])
 
+.controller('FriendsController', ['$scope', 'friendsFactory', function ($scope, friendsFactory) {
+
+  $scope.searchString = "";
+
+  friendsFactory.query(
+    function (response) {
+      $scope.friends = response;
+      if (response.length < 1) $scope.message = "No one has been added yet...";
+    },
+    function (response) {
+      $scope.message = "Error: " + response.status + " " + response.statusText;
+    }
+  );
+
+  $scope.findUser = function() {
+
+  };
+
+}])
+
 .controller('ProfileController', ['$scope', '$state', '$stateParams', 'usersFactory', 'AuthFactory', function ($scope, $state, $stateParams, usersFactory, AuthFactory) {
 
   var userid = AuthFactory.getUserId();
@@ -68,7 +88,7 @@ angular.module('iwgApp')
   $scope.submitProfile = function() {
     usersFactory.update({id: userid}, $scope.user);
     // $state.go($state.current, {}, {reload: true});
-    $state.go('app.profile');
+    $state.go('app.profile', {}, { reload: true });
   }
 
 }])
@@ -95,6 +115,7 @@ angular.module('iwgApp')
     AuthFactory.logout();
     $scope.loggedIn = false;
     $scope.username = '';
+    $state.go('app', {}, { reload: true });
   };
 
   $scope.collapseMenu = function() {
