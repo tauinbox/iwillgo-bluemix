@@ -11,6 +11,7 @@ var Verify    = require('./verify');
 
 router.route('/')
 .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+  // console.log("======== GET ROUTE users/ =========");
   User.find({}, function(err, users) {
     if (err) return next(err);
     res.json(users);
@@ -19,6 +20,7 @@ router.route('/')
 ;
 
 router.post('/register', function(req, res) {
+  // console.log("======== POST ROUTE users/register =========");
   User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
     if (err) return res.status(500).json({err: err});
     if(req.body.firstname) user.firstname = req.body.firstname;
@@ -33,8 +35,8 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login', function(req, res, next) {
+  // console.log("======== POST ROUTE users/login =========");
   passport.authenticate('local', function(err, user, info) {
-    // console.log(req.body);
     // console.log(user);
     if (err) return next(err);
     if (!user) return res.status(401).json({ err: info });
@@ -59,6 +61,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res) {
+  // console.log("======== GET ROUTE users/logout =========");
   req.logout();
   res.status(200).json({ status: 'Bye!' });
 });
@@ -85,13 +88,18 @@ router.get('/logout', function(req, res) {
 
 router.route('/:userId/friends')
 .get(Verify.verifyOrdinaryUser, function(req, res, next) {
-  User.findById(req.params.userId, function(err, user) {
+  // console.log("======== GET ROUTE users/:userId/friends =========");
+  User.findById(req.params.userId)
+  .populate('friends')
+  .exec(function(err, user) {
     if (err) return next(err);
     res.json(user.friends);
   });
 })
 
 .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+  // console.log("======== POST ROUTE users/:userId/friends =========");
+  // console.log(req.body);
   User.findById(req.params.userId, function(err, user) {
     if (err) return next(err);
     user.friends.push(req.body);
@@ -106,6 +114,7 @@ router.route('/:userId/friends')
 
 router.route('/:userId')
 .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+  // console.log("======== GET ROUTE users/:userId =========");
   User.findById(req.params.userId, function(err, user) {
     if (err) return next(err);
     // console.log(user);
@@ -119,6 +128,7 @@ router.route('/:userId')
 })
 
 .put(Verify.verifyOrdinaryUser, function(req, res, next) {
+  // console.log("======== PUT ROUTE users/:userId =========");
   User.findById(req.params.userId, function(err, user) {
     if (err) return next(err);
     if (req.params.userId != req.decoded._id) {

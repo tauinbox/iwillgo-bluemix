@@ -39,10 +39,12 @@ angular.module('iwgApp')
   };
 }])
 
-.controller('FriendsController', ['$scope', 'usersFactory', function ($scope, usersFactory) {
+.controller('FriendsController', ['$scope', '$state', 'usersFactory', 'AuthFactory', function ($scope, $state, usersFactory, AuthFactory) {
 
   $scope.searchString = "";
   $scope.error = "";
+
+  var userid = AuthFactory.getUserId();
 
   usersFactory.friends.query(
     function (response) {
@@ -66,15 +68,20 @@ angular.module('iwgApp')
   $scope.findUser = function() {
     $scope.found = [];
     for (var i=0; i<$scope.users.length; i++) {
-      if (($scope.users[i].username.indexOf($scope.searchString) >= 0) || ($scope.users[i].firstname.indexOf($scope.searchString) >= 0) || ($scope.users[i].lastname.indexOf($scope.searchString) >= 0)) {
-        $scope.found.push($scope.users[i]);
+      if (($scope.users[i].username.indexOf($scope.searchString) >= 0) || 
+          ($scope.users[i].firstname.indexOf($scope.searchString) >= 0) || 
+          ($scope.users[i].lastname.indexOf($scope.searchString) >= 0)) {
+        
+        if ($scope.users[i]._id != userid) $scope.found.push($scope.users[i]);
       }
     }
     // console.log($scope.found);
   };
 
   $scope.addUser = function(userId) {
-    console.log(userId);
+    // console.log(userId);
+    usersFactory.friends.save({_id: userId});
+    $state.go('app.friends', {}, { reload: true });
   };
 
 }])
