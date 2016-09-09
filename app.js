@@ -80,13 +80,13 @@ db.once('open', function () {
     });
   });
 
-  User.register(new User({ username: "steve", firstname: "Steve", lastname: "Jobs" }), "password", function(err, user) {
+  User.register(new User({ username: "steve", firstname: "Steve", lastname: "Jobs", status: "Great things in business are never done by one person. They're done by a team of people." }), "password", function(err, user) {
     user.save(function(err,user) {
       // console.log(user);
     });
   });
 
-  User.register(new User({ username: "harvey", firstname: "Harvey", lastname: "Specter" }), "password", function(err, user) {
+  User.register(new User({ username: "harvey", firstname: "Harvey", lastname: "Specter", status: "I don't pave the way for people... people pave the way for me." }), "password", function(err, user) {
     user.save(function(err,user) {
       // console.log(user);
     });
