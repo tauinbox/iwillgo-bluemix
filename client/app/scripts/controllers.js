@@ -41,7 +41,7 @@ angular.module('iwgApp')
 
 .controller('UsersController', ['$scope', 'usersFactory', function ($scope, usersFactory) {
 
-  usersFactory.query(
+  usersFactory.users.query(
     function (response) {
       $scope.users = response;
     },
@@ -50,11 +50,11 @@ angular.module('iwgApp')
     });
 }])
 
-.controller('FriendsController', ['$scope', 'friendsFactory', function ($scope, friendsFactory) {
+.controller('FriendsController', ['$scope', 'usersFactory', function ($scope, usersFactory) {
 
   $scope.searchString = "";
 
-  friendsFactory.query(
+  usersFactory.friends.query(
     function (response) {
       $scope.friends = response;
       if (response.length < 1) $scope.message = "No one has been added yet...";
@@ -75,7 +75,7 @@ angular.module('iwgApp')
   var userid = AuthFactory.getUserId();
   // console.log(userid);
 
-  $scope.user = usersFactory.get({ id: userid })
+  $scope.user = usersFactory.users.get({ id: userid })
     .$promise.then(
       function(response) {
         $scope.user = response;
