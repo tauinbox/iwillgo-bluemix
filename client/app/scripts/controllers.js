@@ -86,7 +86,7 @@ angular.module('iwgApp')
   );
 
   $scope.submitProfile = function() {
-    usersFactory.update({id: userid}, $scope.user);
+    usersFactory.users.update({id: userid}, $scope.user);
     // $state.go($state.current, {}, {reload: true});
     $state.go('app.profile', {}, { reload: true });
   };
