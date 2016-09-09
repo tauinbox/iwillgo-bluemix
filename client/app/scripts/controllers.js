@@ -39,33 +39,42 @@ angular.module('iwgApp')
   };
 }])
 
-.controller('UsersController', ['$scope', 'usersFactory', function ($scope, usersFactory) {
+.controller('FriendsController', ['$scope', 'usersFactory', function ($scope, usersFactory) {
+
+  $scope.searchString = "";
+  $scope.error = "";
+
+  usersFactory.friends.query(
+    function (response) {
+      $scope.friends = response;
+      if (response.length < 1) $scope.info = "No one has been added yet...";
+    },
+    function (response) {
+      $scope.error += "\nError: " + response.status + " " + response.statusText;
+    }
+  );
 
   usersFactory.users.query(
     function (response) {
       $scope.users = response;
     },
     function (response) {
-      $scope.message = "Error: " + response.status + " " + response.statusText;
-    });
-}])
-
-.controller('FriendsController', ['$scope', 'usersFactory', function ($scope, usersFactory) {
-
-  $scope.searchString = "";
-
-  usersFactory.friends.query(
-    function (response) {
-      $scope.friends = response;
-      if (response.length < 1) $scope.message = "No one has been added yet...";
-    },
-    function (response) {
-      $scope.message = "Error: " + response.status + " " + response.statusText;
+      $scope.error += "\nError: " + response.status + " " + response.statusText;
     }
-  );
+  );  
 
   $scope.findUser = function() {
+    $scope.found = [];
+    for (var i=0; i<$scope.users.length; i++) {
+      if (($scope.users[i].username.indexOf($scope.searchString) >= 0) || ($scope.users[i].firstname.indexOf($scope.searchString) >= 0) || ($scope.users[i].lastname.indexOf($scope.searchString) >= 0)) {
+        $scope.found.push($scope.users[i]);
+      }
+    }
+    // console.log($scope.found);
+  };
 
+  $scope.addUser = function(userId) {
+    console.log(userId);
   };
 
 }])

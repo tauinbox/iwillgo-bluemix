@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('iwgApp')
-.constant("baseURL", "http://iwillgo.mybluemix.net/")
-// .constant("baseURL", "http://localhost:3000/")
+// .constant("baseURL", "http://iwillgo.mybluemix.net/")
+.constant("baseURL", "http://localhost:3000/")
 
 .factory('eventsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
