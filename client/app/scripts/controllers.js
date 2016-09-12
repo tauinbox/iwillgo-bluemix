@@ -44,9 +44,9 @@ angular.module('iwgApp')
   $scope.searchString = "";
   $scope.error = "";
 
-  var userid = AuthFactory.getUserId();
+  var currentUserId = AuthFactory.getUserId();
 
-  usersFactory.friends.query(
+  usersFactory.friends.query({ id: currentUserId },
     function (response) {
       $scope.friends = response;
       if (response.length < 1) $scope.info = "No one has been added yet...";
@@ -72,15 +72,16 @@ angular.module('iwgApp')
           ($scope.users[i].firstname.indexOf($scope.searchString) >= 0) || 
           ($scope.users[i].lastname.indexOf($scope.searchString) >= 0)) {
         
-        if ($scope.users[i]._id != userid) $scope.found.push($scope.users[i]);
+        if ($scope.users[i]._id != currentUserId) $scope.found.push($scope.users[i]);
       }
     }
     // console.log($scope.found);
   };
 
-  $scope.addUser = function(userId) {
+  $scope.addFriend = function(friend) {
     // console.log(userId);
-    usersFactory.friends.save({_id: userId});
+    usersFactory.friends.save({ id: currentUserId }, { _id: friend }); // add him/her to my friends
+    usersFactory.friends.save({ id: friend }, { _id: currentUserId }); // add me to his/her friends
     $state.go('app.friends', {}, { reload: true });
   };
 

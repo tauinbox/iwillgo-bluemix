@@ -26,7 +26,7 @@ angular.module('iwgApp')
 
 .factory('usersFactory', ['$resource', 'baseURL', 'AuthFactory', function($resource, baseURL, AuthFactory) {
 
-  var userid = AuthFactory.getUserId();
+  // var userid = AuthFactory.getUserId();
   var usersFac = {};
 
   usersFac.users = $resource(baseURL + "users/:id", null, {
@@ -35,7 +35,7 @@ angular.module('iwgApp')
     }
   });
 
-  usersFac.friends = $resource(baseURL + "users/" + userid + "/friends/:friendId", null, {
+  usersFac.friends = $resource(baseURL + "users/:id/friends/:friendId", { id: "@id" }, {
     'update': {
       method: 'PUT'
     }
