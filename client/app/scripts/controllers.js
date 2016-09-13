@@ -107,9 +107,9 @@ angular.module('iwgApp')
   };
 
   $scope.removeFriend = function(friend) {
-    // console.log(userId);
+    // console.log({ id: currentUserId, friendId: friend });
     usersFactory.friends.delete({ id: currentUserId, friendId: friend });
-    // usersFactory.friends.delete({ id: friend }, { _id: currentUserId });
+    usersFactory.friends.delete({ id: friend, friendId: currentUserId });
     $state.go('app.friends', {}, { reload: true });
   };  
 
