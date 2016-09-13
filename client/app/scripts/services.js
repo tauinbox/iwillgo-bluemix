@@ -35,10 +35,11 @@ angular.module('iwgApp')
     }
   });
 
-  usersFac.friends = $resource(baseURL + "users/:id/friends/:friendId", { id: "@id" }, {
-    'update': {
-      method: 'PUT'
-    }
+  // usersFac.friends = $resource(baseURL + "users/:id/friends/:friendId", { id: "@id", friendId: "@friendId" }, {
+  usersFac.friends = $resource(baseURL + "users/:id/friends/:friendId", 
+    { id: '@id', friendId: '@friendId' }, {
+    'update': { method: 'PUT' },
+    'delete': { method: 'DELETE' }
   });
 
   return usersFac;

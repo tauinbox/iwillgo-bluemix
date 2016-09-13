@@ -86,6 +86,25 @@ router.get('/logout', function(req, res) {
 //   })(req, res, next);
 // });
 
+router.route('/:userId/friends/:friendId')
+.delete(Verify.verifyOrdinaryUser, function(req, res, next) {
+  // console.log("======== DELETE ROUTE users/:userId/friends/:friendId =========");
+  User.findById(req.params.userId)
+  .exec(function(err, user) {
+    if (err) return next(err);
+    for (var i=0; i<user.friends.length; i++) {
+      if (user.friends[i] == req.params.friendId) {
+        user.friends.splice(i, 1);
+      }
+    }
+    user.save(function(err, user) {
+      if (err) return next(err);
+      console.log('Removed');
+      res.json(user);
+    }); 
+  });
+});
+
 router.route('/:userId/friends')
 .get(Verify.verifyOrdinaryUser, function(req, res, next) {
   // console.log("======== GET ROUTE users/:userId/friends =========");

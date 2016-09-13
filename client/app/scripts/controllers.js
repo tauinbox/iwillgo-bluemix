@@ -52,6 +52,11 @@ angular.module('iwgApp')
       if (response.length < 1) $scope.info = "No one has been added yet...";
     },
     function (response) {
+      // If token has expired then logout and refresh
+      if ((response.data.message === 'You are not authenticated!') && AuthFactory.isAuthenticated) {
+        AuthFactory.logout();
+        $state.go('app', {}, { reload: true });
+      }
       $scope.error += "\nError: " + response.status + " " + response.statusText;
     }
   );
@@ -61,6 +66,11 @@ angular.module('iwgApp')
       $scope.users = response;
     },
     function (response) {
+      // If token has expired then logout and refresh
+      if ((response.data.message === 'You are not authenticated!') && AuthFactory.isAuthenticated) {
+        AuthFactory.logout();
+        $state.go('app', {}, { reload: true });
+      }
       $scope.error += "\nError: " + response.status + " " + response.statusText;
     }
   );  
@@ -77,8 +87,10 @@ angular.module('iwgApp')
         if ($scope.users[i]._id != currentUserId) {
           // console.log($scope.users[i]._id);
 
-          for (var q=0; q<$scope.friends.length; q++) {
-            if ($scope.friends[q]._id == $scope.users[i]._id) continue externloop; // skip if user is already my friend
+          if ($scope.friends) {
+            for (var q=0; q<$scope.friends.length; q++) {
+              if ($scope.friends[q]._id == $scope.users[i]._id) continue externloop; // skip if user is already my friend
+            }
           }
 
           $scope.found.push($scope.users[i]);              
@@ -94,6 +106,13 @@ angular.module('iwgApp')
     $state.go('app.friends', {}, { reload: true });
   };
 
+  $scope.removeFriend = function(friend) {
+    // console.log(userId);
+    usersFactory.friends.delete({ id: currentUserId, friendId: friend });
+    // usersFactory.friends.delete({ id: friend }, { _id: currentUserId });
+    $state.go('app.friends', {}, { reload: true });
+  };  
+
 }])
 
 .controller('ProfileController', ['$scope', '$state', '$stateParams', 'usersFactory', 'AuthFactory', function ($scope, $state, $stateParams, usersFactory, AuthFactory) {
@@ -107,6 +126,8 @@ angular.module('iwgApp')
         $scope.user = response;
       },
       function(response) {
+        console.log("get Profile error:")
+        console.log(response);        
         $scope.message = "Error: " + response.status + " " + response.statusText;
       }
   );
