@@ -67,15 +67,24 @@ angular.module('iwgApp')
 
   $scope.findUser = function() {
     $scope.found = [];
+
+    externloop:
     for (var i=0; i<$scope.users.length; i++) {
       if (($scope.users[i].username.indexOf($scope.searchString) >= 0) || 
           ($scope.users[i].firstname.indexOf($scope.searchString) >= 0) || 
           ($scope.users[i].lastname.indexOf($scope.searchString) >= 0)) {
         
-        if ($scope.users[i]._id != currentUserId) $scope.found.push($scope.users[i]);
+        if ($scope.users[i]._id != currentUserId) {
+          // console.log($scope.users[i]._id);
+
+          for (var q=0; q<$scope.friends.length; q++) {
+            if ($scope.friends[q]._id == $scope.users[i]._id) continue externloop; // skip if user is already my friend
+          }
+
+          $scope.found.push($scope.users[i]);              
+        }
       }
     }
-    // console.log($scope.found);
   };
 
   $scope.addFriend = function(friend) {
