@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify'),
     cache = require('gulp-cache'),
+    replace = require('gulp-replace'),
     changed = require('gulp-changed'),
     rev = require('gulp-rev'),
     browserSync = require('browser-sync'),
@@ -22,12 +23,14 @@ gulp.task('jshint', function() {
   .pipe(jshint.reporter(stylish));
 });
 
+
 gulp.task('usemin',['jshint'], function () {
   return gulp.src('./app/**/*.html')
       .pipe(usemin({
         css:[minifycss(),rev()],
         js: [ngannotate(),uglify(),rev()]
       }))
+      .pipe(replace('http://localhost:3000/', 'http://iwillgo.mybluemix.net/'))
       .pipe(gulp.dest('dist/'));
 });
 
