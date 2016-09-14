@@ -129,8 +129,6 @@ angular.module('iwgApp')
         $scope.user = response;
       },
       function(response) {
-        console.log("get Profile error:")
-        console.log(response);        
         $scope.message = "Error: " + response.status + " " + response.statusText;
       }
   );
