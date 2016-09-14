@@ -100,17 +100,20 @@ angular.module('iwgApp')
   };
 
   $scope.addFriend = function(friend) {
-    // console.log(userId);
-    usersFactory.friends.save({ id: currentUserId }, { _id: friend }); // add him/her to my friends
-    usersFactory.friends.save({ id: friend }, { _id: currentUserId }); // add me to his/her friends
-    $state.go('app.friends', {}, { reload: true });
+    usersFactory.friends.save({ id: currentUserId }, { _id: friend }, function(sucess) {   // add him/her to my friendlist
+      usersFactory.friends.save({ id: friend }, { _id: currentUserId }, function(sucess) { // add me to his/her friendlist
+        $state.go('app.friends', {}, { reload: true }); // refresh page if everything is good
+      });  
+    });
   };
 
   $scope.removeFriend = function(friend) {
     // console.log({ id: currentUserId, friendId: friend });
-    usersFactory.friends.delete({ id: currentUserId, friendId: friend });
-    usersFactory.friends.delete({ id: friend, friendId: currentUserId });
-    $state.go('app.friends', {}, { reload: true });
+    usersFactory.friends.delete({ id: currentUserId, friendId: friend }, function(sucess) {
+      usersFactory.friends.delete({ id: friend, friendId: currentUserId }, function(sucess) {
+        $state.go('app.friends', {}, { reload: true });
+      });      
+    });
   };  
 
 }])
