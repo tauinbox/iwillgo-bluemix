@@ -77,12 +77,13 @@ angular.module('iwgApp')
 
   $scope.findUser = function() {
     $scope.found = [];
+    var input = $scope.searchString.toLowerCase();
 
     externloop:
     for (var i=0; i<$scope.users.length; i++) {
-      if (($scope.users[i].username.indexOf($scope.searchString) >= 0) || 
-          ($scope.users[i].firstname.indexOf($scope.searchString) >= 0) || 
-          ($scope.users[i].lastname.indexOf($scope.searchString) >= 0)) {
+      if (($scope.users[i].username.toLowerCase().indexOf(input) >= 0) || 
+          ($scope.users[i].firstname.toLowerCase().indexOf(input) >= 0) || 
+          ($scope.users[i].lastname.toLowerCase().indexOf(input) >= 0)) {
         
         if ($scope.users[i]._id != currentUserId) {
           // console.log($scope.users[i]._id);
