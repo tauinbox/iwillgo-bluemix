@@ -22,9 +22,9 @@
       <ul class="nav navbar-nav navbar-right" id="navlist">
         <li ng-class="{active: stateis('app')}"><a href="#events"><i class="fa fa-calendar" aria-hidden="true"></i> Events</a></li>
         <hr class="visible-xs">
-        <li ng-if="!loggedIn"><a ng-click="openLogin()"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+        <li ng-if="!loggedIn"><a href="#" ng-click="openLogin()"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
         <hr ng-if="!loggedIn" class="visible-xs">
-        <li ng-if="!loggedIn"><a ng-click="openRegister()"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+        <li ng-if="!loggedIn"><a href="#" ng-click="openRegister()"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
         <hr ng-if="!loggedIn" class="visible-xs">
         <li ng-if="loggedIn" ng-class="{active: stateis('app.friends')}"><a href="#friends"><i class="fa fa-users" aria-hidden="true"></i> Friends</a></li>
         <hr ng-if="loggedIn" class="visible-xs">
@@ -35,7 +35,7 @@
           <ul class="dropdown-menu">
             <li><a href="#editprofile"><i class="fa fa-cog" aria-hidden="true"></i> {{username}} </a></li>
             <li role="separator" class="divider"></li>
-            <li><a ng-click="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+            <li><a href="#" ng-click="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
           </ul>
         </li>
         <hr ng-if="loggedIn" class="visible-xs">
