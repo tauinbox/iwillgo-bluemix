@@ -74,7 +74,7 @@ db.once('open', function () {
   });
 
   // create the Admin user
-  User.register(new User({ username: "admin", admin: true, firstname: "Admin", lastname: "Admin" }), "password", function(err, user) {
+  User.register(new User({ username: "admin", admin: true, firstname: "Admin", lastname: "Admin", status: "@work" }), "password", function(err, user) {
     user.save(function(err,user) {
       // console.log(user);
     });
@@ -90,7 +90,19 @@ db.once('open', function () {
     user.save(function(err,user) {
       // console.log(user);
     });
+  });
+
+  User.register(new User({ username: "albert", firstname: "Albert", lastname: "Einstein", status: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe." }), "password", function(err, user) {
+    user.save(function(err,user) {
+      // console.log(user);
+    });
   });    
+
+  User.register(new User({ username: "mark", firstname: "Mark", lastname: "Twain", status: "If you tell the truth, you don't have to remember anything." }), "password", function(err, user) {
+    user.save(function(err,user) {
+      // console.log(user);
+    });
+  }); 
 
   // DB seeding --------------------------
 
