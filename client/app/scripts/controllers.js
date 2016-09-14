@@ -100,18 +100,18 @@ angular.module('iwgApp')
   };
 
   $scope.addFriend = function(friend) {
-    usersFactory.friends.save({ id: currentUserId }, { _id: friend }, function(sucess) {   // add him/her to my friendlist
-      usersFactory.friends.save({ id: friend }, { _id: currentUserId }, function(sucess) { // add me to his/her friendlist
-        $state.go('app.friends', {}, { reload: true }); // refresh page if everything is good
+    usersFactory.friends.save({ id: currentUserId }, { _id: friend }, function(success) {   // add him/her to my friendlist
+      usersFactory.friends.save({ id: friend }, { _id: currentUserId }, function(success) { // add me to his/her friendlist
+        $state.go($state.current, {}, { reload: true }); // refresh page if everything is good
       });  
     });
   };
 
   $scope.removeFriend = function(friend) {
     // console.log({ id: currentUserId, friendId: friend });
-    usersFactory.friends.delete({ id: currentUserId, friendId: friend }, function(sucess) {
-      usersFactory.friends.delete({ id: friend, friendId: currentUserId }, function(sucess) {
-        $state.go('app.friends', {}, { reload: true });
+    usersFactory.friends.delete({ id: currentUserId, friendId: friend }, function(success) {
+      usersFactory.friends.delete({ id: friend, friendId: currentUserId }, function(success) {
+        $state.go($state.current, {}, { reload: true });
       });      
     });
   };  
@@ -136,7 +136,7 @@ angular.module('iwgApp')
   );
 
   $scope.submitProfile = function() {
-    usersFactory.users.update({id: userid}, $scope.user);
+    usersFactory.users.update({ id: userid }, $scope.user);
     // $state.go($state.current, {}, {reload: true});
     $state.go('app.profile', {}, { reload: true });
   };
@@ -154,7 +154,7 @@ angular.module('iwgApp')
   }
       
   $scope.openLogin = function() {
-    ngDialog.open({ template: 'views/login.html', scope: $scope, className: 'ngdialog-theme-default', controller:"LoginController" });
+    ngDialog.open({ template: 'views/login.html', scope: $scope, className: 'ngdialog-theme-default', controller: "LoginController" });
   };
 
   $scope.openRegister = function () {
