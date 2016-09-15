@@ -12,7 +12,9 @@ eventRouter.use(bodyParser.json());
 
 eventRouter.route('/')
 .get(function(req, res, next) {
-  Event.find({}, function(err, events) {
+  Event.find({})
+  .populate('createdBy')
+  .exec(function(err, events) {
     if (err) return next(err);
     res.json(events);
   });
@@ -41,7 +43,9 @@ eventRouter.route('/')
 
 eventRouter.route('/:eventId')
 .get(Verify.verifyOrdinaryUser, function(req, res, next) {
-  Event.findById(req.params.eventId, function(err, event) {
+  Event.findById(req.params.eventId)
+  .populate('createdBy')
+  .exec(function(err, event) {
     if (err) return next(err);
     res.json(event);
   });
