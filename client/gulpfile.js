@@ -24,6 +24,7 @@ gulp.task('jshint', function() {
 });
 
 
+// Replace baseURL into the production folder
 gulp.task('usemin',['jshint'], function () {
   return gulp.src('./app/**/*.html')
       .pipe(usemin({
