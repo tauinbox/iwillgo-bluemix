@@ -1,0 +1,37 @@
+
+  <div class="container">
+
+    <div class="row row-content">
+      <div class="col-xs-12">
+        <h1 align="center">{{event.title}}</h1>
+      </div>
+    </div>
+
+    <div class="row row-content">
+      <div class="panel panel-primary">
+
+        <div class="panel-body">
+          {{event.description}}
+        </div>
+
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-sm-3">
+              <a ui-sref="app">Back</a>
+            </div>          
+            <div class="col-sm-3">
+              When: <strong>{{event.eventDate | date:'fullDate'}}</strong>
+            </div>
+            <div class="col-sm-3">
+              Age restriction: <strong>{{event.ageRestrict}}</strong>
+            </div>
+            <div class="col-sm-3">
+              Created by: <strong>{{event.createdBy.firstname}} {{event.createdBy.lastname}}</strong>
+            </div>            
+          </div>
+        </div>
+
+      </div>
+    </div>    
+
+  </div>
