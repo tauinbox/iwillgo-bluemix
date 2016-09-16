@@ -44,6 +44,7 @@ angular.module('iwgApp')
 }])
 
 .factory('$localStorage', ['$window', function($window) {
+
   return {
     store: function(key, value) {
       $window.localStorage[key] = value;
@@ -61,6 +62,7 @@ angular.module('iwgApp')
       return JSON.parse($window.localStorage[key] || defaultValue);
     }
   };
+  
 }])
 
 .factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
