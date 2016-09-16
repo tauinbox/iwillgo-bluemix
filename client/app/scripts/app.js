@@ -58,7 +58,7 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
 
     // route for the eventdetails page
     .state('app.eventdetails', {
-      url: 'event/:id',
+      url: 'events/:id',
       views: {
         'content@': {
           templateUrl : 'views/eventdetails.html',
@@ -66,6 +66,17 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
        }
       }
     })
+
+    // route for the editevent page
+    .state('app.editevent', {
+      url: 'events/:id/edit',
+      views: {
+        'content@': {
+          templateUrl : 'views/editevent.html',
+          controller  : 'EventDetailsController'
+       }
+      }
+    })    
     ;
 
     $urlRouterProvider.otherwise('/');
