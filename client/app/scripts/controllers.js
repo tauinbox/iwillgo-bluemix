@@ -29,12 +29,12 @@ angular.module('iwgApp')
   $scope.buttonName = "Create";
 
   $scope.today = function() {
-    $scope.dt = new Date();
+    $scope.event.eventDate = new Date();
   };
   // $scope.today();
 
   $scope.clear = function() {
-    $scope.dt = null;
+    $scope.event.eventDate = null;
   };
 
   $scope.inlineOptions = {
@@ -70,7 +70,7 @@ angular.module('iwgApp')
   };
 
   $scope.setDate = function(year, month, day) {
-    $scope.dt = new Date(year, month, day);
+    $scope.event.eventDate = new Date(year, month, day);
   };
 
   $scope.format = 'dd-MM-yyyy';
@@ -115,7 +115,6 @@ angular.module('iwgApp')
 
   $scope.submitEvent = function() {
     $scope.event.createdBy = userid;
-    $scope.event.eventDate = $scope.dt;
     eventsFactory.save($scope.event, function(response) {
       $state.go('app.eventdetails', { id: response._id });
       // $state.go('app');
