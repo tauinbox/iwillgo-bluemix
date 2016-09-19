@@ -23,7 +23,7 @@ angular.module('iwgApp')
   };
 }])
 
-.controller('NewEventController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, AuthFactory) {
+.controller('NewEventController', ['$scope', '$state', 'eventsFactory', 'AuthFactory', function($scope, $state, eventsFactory, AuthFactory) {
   var userid = AuthFactory.getUserId();
   $scope.mainTitle = "Create a new Event";
   $scope.buttonName = "Create";
@@ -38,7 +38,7 @@ angular.module('iwgApp')
   };
 
   $scope.inlineOptions = {
-    customClass: getDayClass,
+    // customClass: getDayClass,
     minDate: new Date(),
     showWeeks: true
   };
@@ -80,39 +80,6 @@ angular.module('iwgApp')
     opened: false
   };
 
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  var afterTomorrow = new Date();
-  afterTomorrow.setDate(tomorrow.getDate() + 1);
-  $scope.events = [
-    {
-      date: tomorrow,
-      status: 'full'
-    },
-    {
-      date: afterTomorrow,
-      status: 'partially'
-    }
-  ];
-
-  function getDayClass(data) {
-    var date = data.date,
-      mode = data.mode;
-    if (mode === 'day') {
-      var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-      for (var i = 0; i < $scope.events.length; i++) {
-        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-        if (dayToCheck === currentDay) {
-          return $scope.events[i].status;
-        }
-      }
-    }
-
-    return '';
-  }
-
   $scope.submitEvent = function() {
     $scope.event.createdBy = userid;
     eventsFactory.save($scope.event, function(response) {
@@ -125,17 +92,99 @@ angular.module('iwgApp')
 .controller('EditEventController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, AuthFactory) {
   $scope.mainTitle = "Edit the Event";
   $scope.buttonName = "Update";
+
+  var userid = AuthFactory.getUserId();
+
+  eventsFactory.get({ id: $stateParams.id })
+    .$promise.then(
+      function(response) {
+        $scope.event = response;
+        $scope.event.eventDate = new Date($scope.event.eventDate);
+
+        $scope.today = function() {
+          $scope.event.eventDate = new Date();
+        };
+        // $scope.today();
+
+        $scope.clear = function() {
+          $scope.event.eventDate = null;
+        };
+
+        $scope.inlineOptions = {
+          // customClass: getDayClass,
+          minDate: new Date(),
+          showWeeks: true
+        };
+
+        $scope.dateOptions = {
+          // dateDisabled: disabled,
+          formatYear: 'yy',
+          maxDate: new Date(2020, 5, 22),
+          minDate: new Date(),
+          startingDay: 1
+        };
+
+        // Disable weekend selection
+        function disabled(data) {
+          var date = data.date,
+            mode = data.mode;
+          return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        }
+
+        $scope.toggleMin = function() {
+          $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+          $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+        };
+
+        $scope.toggleMin();
+
+        $scope.open = function() {
+          $scope.popup.opened = true;
+        };
+
+        $scope.setDate = function(year, month, day) {
+          $scope.event.eventDate = new Date(year, month, day);
+        };
+
+        $scope.format = 'dd-MM-yyyy';
+
+
+        $scope.popup = {
+          opened: false
+        };
+
+      },
+      function(response) {
+        $scope.message = "Error: " + response.status + " " + response.statusText;
+      }
+  );  
+
+
+  $scope.submitEvent = function() {
+    eventsFactory.update({ id: $stateParams.id }, $scope.event, function(response) {
+      $state.go('app.eventdetails', { id: response._id });
+      // $state.go('app');
+    });
+  };  
+
 }])
 
 .controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory) {
 
   // $scope.event = {};
   $scope.message = "Loading ...";
+  $scope.allowEdit = false;
+  var userid = AuthFactory.getUserId();
 
   $scope.event = eventsFactory.get({ id: $stateParams.id })
     .$promise.then(
       function(response) {
         $scope.event = response;
+        if (response.createdBy._id == userid) {
+          $scope.allowEdit = true;
+        } else {
+          $scope.allowEdit = false;
+        }
       },
       function(response) {
         $scope.message = "Error: " + response.status + " " + response.statusText;
