@@ -26,8 +26,9 @@
               Created by: <strong>{{event.createdBy.firstname}} {{event.createdBy.lastname}}</strong>
             </div>
             <div class="col-sm-3">
-              <a ui-sref="app">Back</a>
-            </div>             
+              <a ui-sref="app">Back</a> 
+              <a ng-if="allowEdit" ui-sref="app.editevent({id: event._id})"> | Edit</a>
+            </div>            
           </div>
         </div>
 
