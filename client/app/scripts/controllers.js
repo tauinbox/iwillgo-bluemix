@@ -2,7 +2,13 @@
 
 angular.module('iwgApp')
 
-.controller('EventsController', ['$scope', 'eventsFactory', function ($scope, eventsFactory) {
+.controller('EventsController', ['$scope', '$rootScope', 'eventsFactory', 'AuthFactory', function ($scope, $rootScope, eventsFactory, AuthFactory) {
+
+  $scope.isAuthenticated = AuthFactory.isAuthenticated();
+  
+  $rootScope.$on('login:Successful', function() {
+    $scope.isAuthenticated = AuthFactory.isAuthenticated();
+  });  
 
   eventsFactory.query(
     function (response) {
@@ -13,7 +19,7 @@ angular.module('iwgApp')
     });
 }])
 
-.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory) {
+.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory) {
 
   // $scope.event = {};
   $scope.message = "Loading ...";
