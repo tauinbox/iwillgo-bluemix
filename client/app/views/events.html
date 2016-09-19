@@ -7,6 +7,12 @@
       </div>
     </div>
 
+    <div ng-if="isAuthenticated" class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-info" ng-click="createEvent()" id="new_event_button">I'd like to create my own Event!</button>
+      </div>
+    </div>
+
     <div class="row row-content">
       <div ng-repeat="event in events" class="panel panel-primary">
         <div class="panel-heading">
@@ -32,6 +38,6 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>
 
   </div>
