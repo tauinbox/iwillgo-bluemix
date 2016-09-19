@@ -17,9 +17,6 @@
         <div class="panel-footer">
           <div class="row">
             <div class="col-sm-3">
-              <a ui-sref="app">Back</a>
-            </div>          
-            <div class="col-sm-3">
               When: <strong>{{event.eventDate | date:'fullDate'}}</strong>
             </div>
             <div class="col-sm-3">
@@ -27,7 +24,10 @@
             </div>
             <div class="col-sm-3">
               Created by: <strong>{{event.createdBy.firstname}} {{event.createdBy.lastname}}</strong>
-            </div>            
+            </div>
+            <div class="col-sm-3">
+              <a ui-sref="app">Back</a>
+            </div>             
           </div>
         </div>
 
