@@ -60,11 +60,16 @@ eventRouter.route('/:eventId')
 .put(Verify.verifyOrdinaryUser, function(req, res, next) {
   Event.findById(req.params.eventId, function(err, event) {
     if (err) return next(err);
-    if (event.id(req.params.eventId).createdBy != req.decoded._id) {
+    if (event.createdBy != req.decoded._id) {
       var err = new Error('You are not authorized to perform this operation!');
       err.status = 403;
       return next(err);
     }
+    event.title = req.body.title;
+    event.description = req.body.description;
+    event.ageRestrict = req.body.ageRestrict;
+    event.eventDate = req.body.eventDate;
+    
     event.save(function (err, event) {
       if (err) return next(err);
       console.log('Event updated!');

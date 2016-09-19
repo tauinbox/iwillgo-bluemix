@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
+angular.module('iwgApp', ['ui.router', 'ui.bootstrap', 'ngResource','ngDialog'])
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
@@ -73,10 +73,21 @@ angular.module('iwgApp', ['ui.router','ngResource','ngDialog'])
       views: {
         'content@': {
           templateUrl : 'views/editevent.html',
-          controller  : 'EventDetailsController'
+          controller  : 'EditEventController'
        }
       }
-    })    
+    })
+
+    // route for the newevent page
+    .state('app.newevent', {
+      url: 'newevent',
+      views: {
+        'content@': {
+          templateUrl : 'views/editevent.html',
+          controller  : 'NewEventController'
+       }
+      }
+    })
     ;
 
     $urlRouterProvider.otherwise('/');

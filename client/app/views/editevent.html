@@ -2,7 +2,7 @@
 
     <div class="row row-content">
       <div class="col-xs-12">
-        <h1 align="center">Edit Event</h1>
+        <h1 align="center">{{mainTitle}}</h1>
       </div>
     </div>
 
@@ -14,22 +14,41 @@
           <div class="form-group">
             <label for="title" class="col-sm-2 control-label">Title</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="title" name="title" placeholder="Enter First Name" ng-model="event.title">
+              <input type="text" class="form-control" id="title" name="title" placeholder="Enter the Title" ng-model="event.title">
             </div>
           </div>
 
           <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-              <textarea class="form-control" id="description" name="description" rows="5" ng-model="event.description"></textarea>
+              <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter your description of the Event" ng-model="event.description"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="datefield" class="col-sm-2 control-label">Date</label>
+            <div class="col-sm-10">
+              <p class="input-group">
+                <input type="text" id="datefield" class="form-control" uib-datepicker-popup="{{format}}" ng-model="event.eventDate" placeholder="dd-MM-YYYY" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="age" class="col-sm-2 control-label">Age</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="age" name="age" placeholder="Age restriction" ng-model="event.ageRestrict">
             </div>
           </div>
 
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-primary">Update</button>
+              <button type="submit" class="btn btn-primary">{{buttonName}}</button>
             </div>
-          </div>          
+          </div>
 
         </form>
       </div> 
