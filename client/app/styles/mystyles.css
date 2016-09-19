@@ -185,6 +185,13 @@ ul#navlist {
   margin-right: 10px;  
 }
 
+
+
+#new_event_button {
+  margin-bottom: 10px;
+}
+
+
 /*RESPONSIVE DESIGN*/
 
 @media (max-width: 1199px) {
