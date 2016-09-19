@@ -2,10 +2,10 @@
 
 angular.module('iwgApp')
 
-.controller('EventsController', ['$scope', '$rootScope', 'eventsFactory', 'AuthFactory', function ($scope, $rootScope, eventsFactory, AuthFactory) {
+.controller('EventsController', ['$scope', '$rootScope', '$state', 'eventsFactory', 'AuthFactory', function ($scope, $rootScope, $state, eventsFactory, AuthFactory) {
 
   $scope.isAuthenticated = AuthFactory.isAuthenticated();
-  
+
   $rootScope.$on('login:Successful', function() {
     $scope.isAuthenticated = AuthFactory.isAuthenticated();
   });  
@@ -17,6 +17,115 @@ angular.module('iwgApp')
     function (response) {
       $scope.message = "Error: " + response.status + " " + response.statusText; //not used now
     });
+
+  $scope.createEvent = function() {
+    $state.go('app.newevent');
+  };
+}])
+
+.controller('NewEventController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, AuthFactory) {
+  var userid = AuthFactory.getUserId();
+  $scope.mainTitle = "Create a new Event";
+  $scope.buttonName = "Create";
+
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  // $scope.today();
+
+  $scope.clear = function() {
+    $scope.dt = null;
+  };
+
+  $scope.inlineOptions = {
+    customClass: getDayClass,
+    minDate: new Date(),
+    showWeeks: true
+  };
+
+  $scope.dateOptions = {
+    // dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+  // Disable weekend selection
+  function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
+
+  $scope.toggleMin = function() {
+    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+  };
+
+  $scope.toggleMin();
+
+  $scope.open = function() {
+    $scope.popup.opened = true;
+  };
+
+  $scope.setDate = function(year, month, day) {
+    $scope.dt = new Date(year, month, day);
+  };
+
+  $scope.format = 'dd-MM-yyyy';
+
+
+  $scope.popup = {
+    opened: false
+  };
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date();
+  afterTomorrow.setDate(tomorrow.getDate() + 1);
+  $scope.events = [
+    {
+      date: tomorrow,
+      status: 'full'
+    },
+    {
+      date: afterTomorrow,
+      status: 'partially'
+    }
+  ];
+
+  function getDayClass(data) {
+    var date = data.date,
+      mode = data.mode;
+    if (mode === 'day') {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i = 0; i < $scope.events.length; i++) {
+        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return $scope.events[i].status;
+        }
+      }
+    }
+
+    return '';
+  }
+
+  $scope.submitEvent = function() {
+    $scope.event.createdBy = userid;
+    $scope.event.eventDate = $scope.dt;
+    eventsFactory.save($scope.event, function(response) {
+      $state.go('app.eventdetails', { id: response._id });
+      // $state.go('app');
+    });
+  };
+}])
+
+.controller('EditEventController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, AuthFactory) {
+  $scope.mainTitle = "Edit the Event";
+  $scope.buttonName = "Update";
 }])
 
 .controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory) {
