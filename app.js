@@ -67,12 +67,14 @@ db.once('open', function () {
           city: 'Somecity'
         },
         comments: [{
-          body: 'The first comment'}]
+          body: 'The first comment', 
+          postedBy: user._id}],
       });
 
       // add a comment
       event1.comments.push({
-        body: 'Another stupid comment'
+        body: 'Another stupid comment',
+        postedBy: user._id
       });
 
       // save the event
