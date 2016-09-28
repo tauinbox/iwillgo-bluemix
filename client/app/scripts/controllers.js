@@ -175,6 +175,7 @@ angular.module('iwgApp')
   $scope.message = "Loading ...";
   $scope.allowEdit = false;
   var userid = AuthFactory.getUserId();
+  $scope.username = AuthFactory.getUsername();
 
   $scope.event = eventsFactory.get({ id: $stateParams.id })
     .$promise.then(
@@ -191,9 +192,17 @@ angular.module('iwgApp')
       }
   );
 
+  // commentsFactory.query({ id: $stateParams.id },
+  //   function (response) {
+  //     $scope.comments = response;
+  //   },
+  //   function (response) {
+  //     $scope.message = "Error: " + response.status + " " + response.statusText; //not used now
+  //   });    
+
   $scope.submitComment = function () {
 
-    commentsFactory.save({id: $stateParams.id}, $scope.mycomment);
+    commentsFactory.save({id: $stateParams.id}, {body: $scope.mycomment, postedBy: userid});
     $state.go($state.current, {}, {reload: true});
     $scope.commentForm.$setPristine();
     $scope.mycomment = {

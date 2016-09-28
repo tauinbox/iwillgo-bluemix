@@ -45,6 +45,7 @@ eventRouter.route('/:eventId')
 .get(Verify.verifyOrdinaryUser, function(req, res, next) {
   Event.findById(req.params.eventId)
   .populate('createdBy')
+  .populate('comments.postedBy')
   .exec(function(err, event) {
     if (err) return next(err);
     res.json(event);
@@ -88,12 +89,20 @@ eventRouter.route('/:eventId')
 //////////////// HANDLING COMMENTS (nested object) /////////////////////
 
 eventRouter.route('/:eventId/comments')
-.get(Verify.verifyOrdinaryUser, function(req, res, next) {
-  Event.findById(req.params.eventId, function(err, event) {
-    if (err) return next(err);
-    res.json(event.comments);
-  });
-})
+// .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+//   Event.findById(req.params.eventId)
+//   // .populate({
+//   //   path: 'comments',
+//   //   populate: {
+//   //     path: 'postedBy',
+//   //     model: 'User'
+//   //   }
+//   .populate('comments.postedBy') 
+//   .exec(function(err, event) {
+//     if (err) return next(err);
+//     res.json(event);
+//   });
+// })
 
 // I've kept ability for ordinary users to leave their comments :)
 .post(Verify.verifyOrdinaryUser, function(req, res, next) {
