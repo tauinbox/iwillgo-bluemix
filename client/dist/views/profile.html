@@ -1,0 +1,33 @@
+  <div class="container">
+
+    <div class="row row-content">
+      <div class="col-xs-12">
+        <h1 align="center">User Profile</h1>
+      </div>
+    </div>
+
+    <div class="row row-content">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title">{{user.username}}</h4>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 col-md-2">
+            {{user.firstname}}
+          </div>
+          <div class="col-xs-12 col-md-2">
+            {{user.lastname}}
+          </div>
+<!--           <div class="col-xs-12 col-md-2 offset-md-8">
+          </div> -->
+          <div class="col-xs-12 col-md-2 offset-md-2">
+            Member since: {{user.createdAt | date:'yyyy-MM-dd'}}
+          </div>
+          <div class="col-xs-12 col-md-2 offset-md-2">
+            Status message: {{user.status}}
+          </div>          
+        </div>
+      </div>
+    </div>    
+
+  </div>

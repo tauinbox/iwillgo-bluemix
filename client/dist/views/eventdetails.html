@@ -1,0 +1,69 @@
+
+  <div class="container">
+
+    <div class="row row-content">
+      <div class="col-xs-12">
+        <h1 align="center">{{event.title}}</h1>
+      </div>
+    </div>
+
+    <div class="row row-content">
+      <div class="panel panel-primary">
+
+        <div class="panel-body">
+          {{event.description}}
+        </div>
+
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-sm-3">
+              When: <strong>{{event.eventDate | date:'fullDate'}}</strong>
+            </div>
+            <div class="col-sm-3">
+              Age restriction: <strong>{{event.ageRestrict}}</strong>
+            </div>
+            <div class="col-sm-3">
+              Created by: <strong>{{event.createdBy.firstname}} {{event.createdBy.lastname}}</strong>
+            </div>
+            <div class="col-sm-3">
+              <a ui-sref="app">Back</a> 
+              <a ng-if="allowEdit" ui-sref="app.editevent({id: event._id})"> | Edit</a>
+            </div>            
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-xs-9 col-xs-offset-1">
+      <h4 ng-if="comments.length > 0">Comments</h4>          
+      <blockquote ng-repeat="comment in event.comments">
+        <p>{{comment.body}}</p>
+        <footer>
+          {{comment.postedBy.firstname}} {{comment.postedBy.lastname}}, {{comment.updatedAt | date: 'MMM. dd, yyyy'}}
+        </footer>
+      </blockquote>
+    </div>
+
+    <div style="clear: both"></div>   
+
+    <form class="form-horizontal" name="commentForm" ng-submit="submitComment()" novalidate>
+
+      <div class="form-group" ng-class="{'has-error' : commentForm.mycomment.$error.required && !commentForm.mycomment.$pristine}">
+        <label for="mycomment" class="col-sm-2 control-label">{{username}} says:</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="mycomment" name="mycomment" ng-model="mycomment" rows="7" placeholder="Leave your feedback here" required></textarea>
+          <span ng-show="commentForm.mycomment.$error.required && !commentForm.mycomment.$pristine" class="help-block">
+            This Field is Required
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-info" ng-disabled="commentForm.$invalid">Submit Comment</button>
+        </div>
+      </div>
+    </form>     
+
+  </div>

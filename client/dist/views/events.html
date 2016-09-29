@@ -1,0 +1,43 @@
+
+  <div class="container">
+
+    <div class="row row-content">
+      <div class="col-xs-12">
+        <h1 align="center">Events</h1>
+      </div>
+    </div>
+
+    <div ng-if="isAuthenticated" class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-info" ng-click="createEvent()" id="new_event_button">I'd like to create my own Event!</button>
+      </div>
+    </div>
+
+    <div class="row row-content">
+      <div ng-repeat="event in events" class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title">{{event.title}}</h4>
+        </div>
+        <div class="panel-body">
+          {{event.description}}
+        </div>
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-sm-3">
+              When: <strong>{{event.eventDate | date:'fullDate'}}</strong>
+            </div>
+            <div class="col-sm-3">
+              Age restriction: <strong>{{event.ageRestrict}}</strong>
+            </div>
+            <div class="col-sm-3">
+              Created by: <strong>{{event.createdBy.firstname}} {{event.createdBy.lastname}}</strong>
+            </div>
+            <div ng-show="isAuthenticated" class="col-sm-3">
+              <a ui-sref="app.eventdetails({id: event._id})">Show</a>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
