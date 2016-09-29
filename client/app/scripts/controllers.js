@@ -202,12 +202,14 @@ angular.module('iwgApp')
 
   $scope.submitComment = function () {
 
-    commentsFactory.save({id: $stateParams.id}, {body: $scope.mycomment, postedBy: userid});
-    $state.go($state.current, {}, {reload: true});
-    $scope.commentForm.$setPristine();
-    $scope.mycomment = {
-      comment: ""
-    };
+    commentsFactory.save({id: $stateParams.id}, {body: $scope.mycomment, postedBy: userid})
+    .$promise.then(function() {
+      $state.go($state.current, {}, {reload: true});
+      // $scope.commentForm.$setPristine();
+      // $scope.mycomment = {
+      //   comment: ""
+      // };      
+    });
   };
 }])
 
