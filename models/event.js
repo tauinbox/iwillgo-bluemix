@@ -16,13 +16,11 @@ var commentSchema = new Schema({
 });
 
 var placeSchema = new Schema({
-  country: {
-    type: String
-  },
-  city: {
-    type: String
-  }
+  address: { type: String },
+  loc: { 'type': { type: String, enum: "Point", default: "Point" }, coordinates: { type: [Number],   default: [0,0] } }  
 });
+
+placeSchema.index({ loc: '2dsphere' });
 
 var eventSchema = new Schema({
     title: {

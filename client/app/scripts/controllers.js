@@ -23,10 +23,23 @@ angular.module('iwgApp')
   };
 }])
 
-.controller('NewEventController', ['$scope', '$state', 'eventsFactory', 'AuthFactory', function($scope, $state, eventsFactory, AuthFactory) {
+.controller('NewEventController', ['$scope', '$state', 'eventsFactory', 'AuthFactory', 'NgMap', function($scope, $state, eventsFactory, AuthFactory, NgMap) {
   var userid = AuthFactory.getUserId();
   $scope.mainTitle = "Create a new Event";
   $scope.buttonName = "Create";
+
+  $scope.vm = {};
+  $scope.vm.types = "['geocode']";
+
+  $scope.vm.placeChanged = function() {
+    $scope.vm.place = this.getPlace();
+    // console.log('location', $scope.vm.place.geometry.location);
+    $scope.vm.map.setCenter($scope.vm.place.geometry.location);
+  };
+
+  NgMap.getMap().then(function(map) {
+    $scope.vm.map = map;
+  });
 
   $scope.today = function() {
     $scope.event.eventDate = new Date();
@@ -89,9 +102,23 @@ angular.module('iwgApp')
   };
 }])
 
-.controller('EditEventController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, AuthFactory) {
+.controller('EditEventController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'AuthFactory', 'NgMap', function($scope, $state, $stateParams, eventsFactory, AuthFactory, NgMap) {
   $scope.mainTitle = "Edit the Event";
   $scope.buttonName = "Update";
+
+  $scope.vm = {};
+  $scope.vm.types = "['geocode']";
+
+  $scope.vm.placeChanged = function() {
+    $scope.vm.place = this.getPlace();
+    // console.log('location', $scope.vm.place.geometry.location);
+    $scope.vm.map.setCenter($scope.vm.place.geometry.location);
+  };
+
+  NgMap.getMap().then(function(map) {
+    $scope.vm.map = map;
+  });
+
 
   var userid = AuthFactory.getUserId();
 
@@ -169,7 +196,7 @@ angular.module('iwgApp')
 
 }])
 
-.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory) {
+.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', 'ngMap', function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory, ngMap) {
 
   // $scope.event = {};
   $scope.message = "Loading ...";
