@@ -196,7 +196,7 @@ angular.module('iwgApp')
 
 }])
 
-.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', 'ngMap', function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory, ngMap) {
+.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', 'NgMap', function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory, NgMap) {
 
   // $scope.event = {};
   $scope.message = "Loading ...";
