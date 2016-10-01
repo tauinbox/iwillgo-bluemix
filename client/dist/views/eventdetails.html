@@ -10,6 +10,10 @@
     <div class="row row-content">
       <div class="panel panel-primary">
 
+        <ng-map zoom="14" center="{{maploc}}">
+          <marker position="{{maploc}}"></marker>
+        </ng-map>
+
         <div class="panel-body">
           {{event.description}}
         </div>
