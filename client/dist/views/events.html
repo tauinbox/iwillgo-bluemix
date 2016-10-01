@@ -23,8 +23,8 @@
             <div class="col-sm-10">
               {{event.description}}
             </div>
-            <div class="col-sm-2">
-              <button class="btn btn-success iwg_button" ng-click="iWillGo()">iWillGo!</button>
+            <div ng-if="isAuthenticated" class="col-sm-2">
+              <button class="btn btn-success iwg_button" ng-click="iWillGo(event._id)">iWillGo!</button>
             </div>
           </div>
         </div>
