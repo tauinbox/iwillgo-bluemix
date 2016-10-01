@@ -15,21 +15,34 @@
         </ng-map>
 
         <div class="panel-body">
-          {{event.description}}
+          <div class="row">
+            <div class="col-sm-10">
+              {{event.description}}
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-success iwg_button" ng-click="iWillGo()">iWillGo!</button>
+            </div>
+          </div>
         </div>
 
         <div class="panel-footer">
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               When: <strong>{{event.eventDate | date:'fullDate'}}</strong>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
+              Where: <strong>{{event.place.address}}</strong>
+            </div>            
+            <div class="col-sm-2">
               Age restriction: <strong>{{event.ageRestrict}}</strong>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               Created by: <strong>{{event.createdBy.firstname}} {{event.createdBy.lastname}}</strong>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
+              Already joined: <strong>{{event.joined.length}}</strong>
+            </div>   
+            <div class="col-sm-2">
               <a ui-sref="app">Back</a> 
               <a ng-if="allowEdit" ui-sref="app.editevent({id: event._id})"> | Edit</a>
             </div>            
