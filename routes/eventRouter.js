@@ -70,6 +70,7 @@ eventRouter.route('/:eventId')
     event.description = req.body.description;
     event.ageRestrict = req.body.ageRestrict;
     event.eventDate = req.body.eventDate;
+    event.place = req.body.place;
     
     event.save(function (err, event) {
       if (err) return next(err);

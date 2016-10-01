@@ -63,8 +63,8 @@ db.once('open', function () {
         createdBy: user._id,
         ageRestrict: 18,
         place: {
-          country: 'Somecountry',
-          city: 'Somecity'
+          address: 'Saint Petersburg, Russia',
+          loc: { type: "Point", coordinates: [59.9342802, 30.335098600000038] }
         },
         comments: [{
           body: 'The first comment', 
@@ -98,7 +98,11 @@ db.once('open', function () {
         title: '8th Annual Bark in the Park',
         description: 'We hope you will join us for the 8th Annual Bark in the Park. There will be guest speakers and coaches, food, games, and shelter pups to play with!',
         eventDate: new Date(Date.now() + 27 * 24*3600*1000),
-        createdBy: user._id
+        createdBy: user._id,
+        place: {
+          address: 'Moscow, Russia',
+          loc: { type: "Point", coordinates: [55.755826, 37.6173] }
+        }
       });      
 
     });
