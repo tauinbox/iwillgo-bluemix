@@ -63,8 +63,8 @@ db.once('open', function () {
         createdBy: user._id,
         ageRestrict: 18,
         place: {
-          address: 'Saint Petersburg, Russia',
-          loc: { type: "Point", coordinates: [59.9342802, 30.335098600000038] }
+          address: 'Fulhadhoo, Maldives',
+          loc: { type: "Point", coordinates: [4.884902, 72.928663] }
         },
         comments: [{
           body: 'The first comment', 
@@ -73,7 +73,7 @@ db.once('open', function () {
 
       // add a comment
       event1.comments.push({
-        body: 'Another stupid comment',
+        body: 'Another wow comment',
         postedBy: user._id
       });
 
