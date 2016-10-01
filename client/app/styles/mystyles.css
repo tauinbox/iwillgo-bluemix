@@ -186,11 +186,21 @@ ul#navlist {
 }
 
 
-
 #new_event_button {
   margin-bottom: 10px;
 }
 
+blockquote p {
+  color: white;
+}
+
+blockquote footer {
+  color: #5ac9ff;
+}
+
+label[for="mycomment"] {
+  color: #5ac9ff;
+}
 
 /*RESPONSIVE DESIGN*/
 

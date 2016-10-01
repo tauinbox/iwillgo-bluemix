@@ -44,7 +44,7 @@
       <blockquote ng-repeat="comment in event.comments">
         <p>{{comment.body}}</p>
         <footer>
-          {{comment.postedBy.firstname}} {{comment.postedBy.lastname}}, {{comment.updatedAt | date: 'MMM. dd, yyyy'}}
+          {{comment.postedBy.firstname}} {{comment.postedBy.lastname}}, {{comment.updatedAt | date: 'MMM d, y h:mm a'}}
         </footer>
       </blockquote>
     </div>

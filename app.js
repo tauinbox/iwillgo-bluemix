@@ -57,7 +57,7 @@ db.once('open', function () {
       // create a new event
       var event1 = Event({
         title: 'Moonlight Beach Party',
-        description: 'When the sun, the beach, food and fun people get together, you cannot help but have a good time and make a ton of new friends.\
+        description: 'When the moon, the beach, food and fun people get together, you cannot help but have a good time and make a ton of new friends.\
                       \nJoin us at the Moonlight Beach Party!',
         eventDate: new Date(Date.now() + 50 * 24*3600*1000),
         createdBy: user._id,
@@ -100,8 +100,8 @@ db.once('open', function () {
         eventDate: new Date(Date.now() + 27 * 24*3600*1000),
         createdBy: user._id,
         place: {
-          address: 'Moscow, Russia',
-          loc: { type: "Point", coordinates: [55.755826, 37.6173] }
+          address: 'National Exhibition Centre (NEC) Birmingham, England',
+          loc: { type: "Point", coordinates: [52.453333, -1.719444] }
         }
       });      
 
