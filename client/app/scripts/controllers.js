@@ -6,11 +6,20 @@ angular.module('iwgApp')
 
   $scope.isAuthenticated = AuthFactory.isAuthenticated();
 
+  if ($scope.isAuthenticated) {
+    $scope.userid = AuthFactory.getUserId();
+  }
+
   $rootScope.$on('login:Successful', function() {
     $scope.isAuthenticated = AuthFactory.isAuthenticated();
-  });  
+    $scope.userid = AuthFactory.getUserId();
+  });
 
-  eventsFactory.query(
+  $rootScope.$on('user:Added', function() {
+    $state.go($state.current, {}, {reload: true});
+  });
+
+  eventsFactory.events.query(
     function (response) {
       $scope.events = response;
     },
@@ -21,6 +30,12 @@ angular.module('iwgApp')
   $scope.createEvent = function() {
     $state.go('app.newevent');
   };
+
+  $scope.iWillGo = function(eventid) {
+    // console.log($scope.userid);
+    eventsFactory.iWillGo(eventid, $scope.userid);
+  };
+
 }])
 
 .controller('NewEventController', ['$scope', '$state', 'eventsFactory', 'AuthFactory', 'NgMap', function($scope, $state, eventsFactory, AuthFactory, NgMap) {
@@ -102,7 +117,7 @@ angular.module('iwgApp')
 
   $scope.submitEvent = function() {
     $scope.event.createdBy = userid;
-    eventsFactory.save($scope.event, function(response) {
+    eventsFactory.events.save($scope.event, function(response) {
       $state.go('app.eventdetails', { id: response._id });
       // $state.go('app');
     });
@@ -133,7 +148,7 @@ angular.module('iwgApp')
 
   var userid = AuthFactory.getUserId();
 
-  eventsFactory.get({ id: $stateParams.id })
+  eventsFactory.events.get({ id: $stateParams.id })
     .$promise.then(
       function(response) {
         $scope.event = response;
@@ -201,7 +216,7 @@ angular.module('iwgApp')
 
 
   $scope.submitEvent = function() {
-    eventsFactory.update({ id: $stateParams.id }, $scope.event, function(response) {
+    eventsFactory.events.update({ id: $stateParams.id }, $scope.event, function(response) {
       $state.go('app.eventdetails', { id: response._id });
       // $state.go('app');
     });
@@ -209,8 +224,8 @@ angular.module('iwgApp')
 
 }])
 
-.controller('EventDetailsController', ['$scope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', 'NgMap', 
-  function($scope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory, NgMap) {
+.controller('EventDetailsController', ['$scope', '$rootScope', '$state', '$stateParams', 'eventsFactory', 'commentsFactory', 'AuthFactory', 'NgMap', 
+  function($scope, $rootScope, $state, $stateParams, eventsFactory, commentsFactory, AuthFactory, NgMap) {
 
   // $scope.event = {};
   $scope.message = "Loading ...";
@@ -218,7 +233,7 @@ angular.module('iwgApp')
   var userid = AuthFactory.getUserId();
   $scope.username = AuthFactory.getUsername();
 
-  $scope.event = eventsFactory.get({ id: $stateParams.id })
+  $scope.event = eventsFactory.events.get({ id: $stateParams.id })
     .$promise.then(
       function(response) {
         $scope.event = response;
@@ -236,6 +251,9 @@ angular.module('iwgApp')
       }
   );
 
+  $rootScope.$on('user:Added', function() {
+    $state.go($state.current, {}, {reload: true});
+  });
 
   // commentsFactory.query({ id: $stateParams.id },
   //   function (response) {
@@ -256,6 +274,11 @@ angular.module('iwgApp')
       // };      
     });
   };
+
+  $scope.iWillGo = function() {
+    // console.log($scope.event._id, userid);
+    eventsFactory.iWillGo($scope.event._id, userid);
+  };  
 }])
 
 .controller('FriendsController', ['$scope', '$state', 'usersFactory', 'AuthFactory', function ($scope, $state, usersFactory, AuthFactory) {

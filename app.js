@@ -29,84 +29,89 @@ db.once('open', function () {
   // DB seeding --------------------------
 
   // clear collections
-  db.collection('events').drop(function () {});
-  db.collection('users').drop(function () {});
+  db.collection('events').drop(function () {
+    db.collection('users').drop(function () {
 
-  // create the Admin user
-  User.register(new User({ username: "admin", admin: true, firstname: "Admin", lastname: "Admin", status: "@work" }), "password", function(err, user) {
-    user.save(function(err,user) {
-      // console.log(user);
-    });
-  });
-
-  User.register(new User({ username: "steve", firstname: "Steve", lastname: "Jobs", status: "Great things in business are never done by one person. They're done by a team of people." }), "password", function(err, user) {
-    user.save(function(err,user) {
-    // console.log(user);
-    });
-  });
-
-  User.register(new User({ username: "harvey", firstname: "Harvey", lastname: "Specter", status: "I don't pave the way for people... people pave the way for me." }), "password", function(err, user) {
-    user.save(function(err,user) {
-      // console.log(user);
-    });
-  });
-
-  User.register(new User({ username: "albert", firstname: "Albert", lastname: "Einstein", status: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe." }), "password", function(err, user) {
-    user.save(function(err,user) {
-
-      // create a new event
-      var event1 = Event({
-        title: 'Moonlight Beach Party',
-        description: 'When the moon, the beach, food and fun people get together, you cannot help but have a good time and make a ton of new friends.\
-                      \nJoin us at the Moonlight Beach Party!',
-        eventDate: new Date(Date.now() + 50 * 24*3600*1000),
-        createdBy: user._id,
-        ageRestrict: 18,
-        place: {
-          address: 'Fulhadhoo, Maldives',
-          loc: { type: "Point", coordinates: [4.884902, 72.928663] }
-        },
-        comments: [{
-          body: 'The first comment', 
-          postedBy: user._id}],
+      // create the Admin user
+      User.register(new User({ username: "admin", admin: true, firstname: "Admin", lastname: "Admin", status: "@work" }), "password", function(err, user) {
+        user.save(function(err,user) {
+          // console.log(user);
+        });
       });
 
-      // add a comment
-      event1.comments.push({
-        body: 'Another wow comment',
-        postedBy: user._id
+      User.register(new User({ username: "steve", firstname: "Steve", lastname: "Jobs", status: "Great things in business are never done by one person. They're done by a team of people." }), "password", function(err, user) {
+        user.save(function(err,user) {
+        // console.log(user);
+        });
       });
 
-      // save the event
-      event1.save(function (err) {
-        if (err) return next(err);
-        console.log('Event created!');
-        // get all the events
-        // Event.find({}, function (err, events) {
-        //   if (err) return next(err);
-        // });
+      User.register(new User({ username: "harvey", firstname: "Harvey", lastname: "Specter", status: "I don't pave the way for people... people pave the way for me." }), "password", function(err, user) {
+        user.save(function(err,user) {
+          // console.log(user);
+        });
       });
 
+      User.register(new User({ username: "albert", firstname: "Albert", lastname: "Einstein", status: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe." }), "password", function(err, user) {
+        user.save(function(err,user) {
+
+          // create a new event
+          var event1 = Event({
+            title: 'Moonlight Beach Party',
+            description: 'When the moon, the beach, food and fun people get together, you cannot help but have a good time and make a ton of new friends.\
+                          \nJoin us at the Moonlight Beach Party!',
+            eventDate: new Date(Date.now() + 50 * 24*3600*1000),
+            createdBy: user._id,
+            ageRestrict: 18,
+            place: {
+              address: 'Fulhadhoo, Maldives',
+              loc: { type: "Point", coordinates: [4.884902, 72.928663] }
+            },
+            comments: [{
+              body: 'The first comment', 
+              postedBy: user._id}],
+          });
+
+          // add a comment
+          event1.comments.push({
+            body: 'Another wow comment',
+            postedBy: user._id
+          });
+
+          // save the event
+          event1.save(function (err) {
+            if (err) return next(err);
+            console.log('Event created!');
+            // get all the events
+            // Event.find({}, function (err, events) {
+            //   if (err) return next(err);
+            // });
+          });
+
+        });
+      });    
+
+      User.register(new User({ username: "mark", firstname: "Mark", lastname: "Twain", status: "If you tell the truth, you don't have to remember anything." }), "password", function(err, user) {
+        user.save(function(err,user) {
+
+          // create an event
+          Event.create({
+            title: '8th Annual Bark in the Park',
+            description: 'We hope you will join us for the 8th Annual Bark in the Park. There will be guest speakers and coaches, food, games, and shelter pups to play with!',
+            eventDate: new Date(Date.now() + 27 * 24*3600*1000),
+            createdBy: user._id,
+            place: {
+              address: 'National Exhibition Centre (NEC) Birmingham, England',
+              loc: { type: "Point", coordinates: [52.453333, -1.719444] }
+            }
+          });      
+
+        });
+      }); 
+
+
     });
-  });    
-
-  User.register(new User({ username: "mark", firstname: "Mark", lastname: "Twain", status: "If you tell the truth, you don't have to remember anything." }), "password", function(err, user) {
-    user.save(function(err,user) {
-
-      // create an event
-      Event.create({
-        title: '8th Annual Bark in the Park',
-        description: 'We hope you will join us for the 8th Annual Bark in the Park. There will be guest speakers and coaches, food, games, and shelter pups to play with!',
-        eventDate: new Date(Date.now() + 27 * 24*3600*1000),
-        createdBy: user._id,
-        place: {
-          address: 'National Exhibition Centre (NEC) Birmingham, England',
-          loc: { type: "Point", coordinates: [52.453333, -1.719444] }
-        }
-      });      
-
-    });
-  }); 
+  });
+  
 
     //   db.close();
 
