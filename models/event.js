@@ -17,7 +17,7 @@ var commentSchema = new Schema({
 
 var placeSchema = new Schema({
   address: { type: String },
-  loc: { 'type': { type: String, enum: "Point", default: "Point" }, coordinates: { type: [Number],   default: [0,0] } }  
+  loc: { 'type': { type: String, enum: "Point", default: "Point" }, coordinates: { type: [Number],   default: [0, 0] } }  
 });
 
 placeSchema.index({ loc: '2dsphere' });
