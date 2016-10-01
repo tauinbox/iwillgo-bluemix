@@ -29,7 +29,7 @@ angular.module('iwgApp')
   $scope.buttonName = "Create";
 
   $scope.event = {};
-  $scope.event.place = { address: "", loc: { type: "Point", coordinates: [0, 0] } }
+  $scope.event.place = { address: "", loc: { type: "Point", coordinates: [0, 0] } };
 
   $scope.vm = {};
   $scope.vm.types = "['geocode']";
@@ -40,7 +40,7 @@ angular.module('iwgApp')
     $scope.vm.map.setCenter($scope.vm.place.geometry.location);
     $scope.event.place.loc.coordinates[0] = $scope.vm.place.geometry.location.lat();
     $scope.event.place.loc.coordinates[1] = $scope.vm.place.geometry.location.lng();
-    $scope.event.place.address = $scope.vm.place.formatted_address
+    $scope.event.place.address = $scope.vm.place.formatted_address;
     // console.log($scope.event.place);
   };
 
@@ -122,7 +122,7 @@ angular.module('iwgApp')
     $scope.vm.map.setCenter($scope.vm.place.geometry.location);
     $scope.event.place.loc.coordinates[0] = $scope.vm.place.geometry.location.lat();
     $scope.event.place.loc.coordinates[1] = $scope.vm.place.geometry.location.lng();
-    $scope.event.place.address = $scope.vm.place.formatted_address
+    $scope.event.place.address = $scope.vm.place.formatted_address;
     // console.log($scope.event.place);
   };
 
