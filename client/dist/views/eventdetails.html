@@ -43,8 +43,8 @@
               Already joined: <strong>{{event.joined.length}}</strong>
             </div>   
             <div class="col-sm-2">
-              <a ui-sref="app">Back</a> 
-              <a ng-if="allowEdit" ui-sref="app.editevent({id: event._id})"> | Edit</a>
+              <a ui-sref="app"><strong>Back</strong></a> 
+              <a ng-if="allowEdit" ui-sref="app.editevent({id: event._id})"> | <strong>Edit</strong></a>
             </div>            
           </div>
         </div>
@@ -68,7 +68,7 @@
 
       <div class="form-group" ng-class="{'has-error' : commentForm.mycomment.$error.required && !commentForm.mycomment.$pristine}">
         <label for="mycomment" class="col-sm-2 control-label">{{username}} says:</label>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <textarea class="form-control" id="mycomment" name="mycomment" ng-model="mycomment" rows="7" placeholder="Leave your feedback here" required></textarea>
           <span ng-show="commentForm.mycomment.$error.required && !commentForm.mycomment.$pristine" class="help-block">
             This Field is Required
