@@ -206,6 +206,14 @@ label[for="mycomment"] {
   color: #5ac9ff;
 }
 
+.form-inline .form-group input {
+  width:350px;
+}
+
+.form-inline {
+  margin-bottom: 20px;
+}
+
 /*RESPONSIVE DESIGN*/
 
 @media (max-width: 1199px) {
@@ -265,5 +273,10 @@ label[for="mycomment"] {
   }
   body {
     margin-top: 65px;
-  }     
+  }
+
+  .form-inline .form-group input {
+      width:190px;
+  }
+
 }
