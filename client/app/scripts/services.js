@@ -1,202 +1,206 @@
-'use strict';
+(function() {
 
-angular.module('iwgApp')
-.constant("baseURL", "http://localhost:3000/")
+  'use strict';
 
-.factory('eventsFactory', ['$resource', '$rootScope', 'baseURL', function($resource, $rootScope, baseURL) {
-  var eventsFac = {};
+  angular.module('iwgApp')
+  .constant("baseURL", "http://localhost:3000/")
 
-  eventsFac.events = $resource(baseURL + "events/:id", null, {
-    'update': {
-      method: 'PUT'
-    }
-  });
+  .factory('eventsFactory', ['$resource', '$rootScope', 'baseURL', function($resource, $rootScope, baseURL) {
+    var eventsFac = {};
 
-  eventsFac.iWillGo = function(eventid, userid) {
-    eventsFac.events.get({id: eventid}).$promise.then(
-      function(response) {
-        for(var i=0; i<response.joined.length; i++) {
-          if(response.joined[i] == userid) {
-            console.log("Already joined");
-            return;
-          }
-        }
-        response.joined.push(userid);
-        eventsFac.events.update({id: eventid}, response, function(response) {
-          $rootScope.$broadcast('user:Added');
-        });
-      },
-      function(response) {
-        $scope.message = "Error: " + response.status + " " + response.statusText;
+    eventsFac.events = $resource(baseURL + "events/:id", null, {
+      'update': {
+        method: 'PUT'
       }
-    );
-  };
+    });
 
-  return eventsFac;
+    eventsFac.iWillGo = function(eventid, userid) {
+      eventsFac.events.get({id: eventid}).$promise.then(
+        function(response) {
+          for(var i=0; i<response.joined.length; i++) {
+            if(response.joined[i] == userid) {
+              console.log("Already joined");
+              return;
+            }
+          }
+          response.joined.push(userid);
+          eventsFac.events.update({id: eventid}, response, function(response) {
+            $rootScope.$broadcast('user:Added');
+          });
+        },
+        function(response) {
+          $scope.message = "Error: " + response.status + " " + response.statusText;
+        }
+      );
+    };
 
-}])
+    return eventsFac;
 
-.factory('commentsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
+  }])
 
-  return $resource(baseURL + "events/:id/comments/:commentId", {id: "@id", commentId: "@commentId"}, {
-    'update': {
-      method: 'PUT'
-    }
-  });
+  .factory('commentsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
 
-}])
+    return $resource(baseURL + "events/:id/comments/:commentId", {id: "@id", commentId: "@commentId"}, {
+      'update': {
+        method: 'PUT'
+      }
+    });
 
-.factory('usersFactory', ['$resource', 'baseURL', 'AuthFactory', function($resource, baseURL, AuthFactory) {
+  }])
 
-  var usersFac = {};
+  .factory('usersFactory', ['$resource', 'baseURL', 'AuthFactory', function($resource, baseURL, AuthFactory) {
 
-  usersFac.users = $resource(baseURL + "users/:id", null, {
-    'update': {
-      method: 'PUT'
-    }
-  });
+    var usersFac = {};
 
-  usersFac.friends = $resource(baseURL + "users/:id/friends/:friendId", { id: '@id', friendId: '@friendId' }, {
-    'update': { 
-      method: 'PUT' 
-    }
-  });
+    usersFac.users = $resource(baseURL + "users/:id", null, {
+      'update': {
+        method: 'PUT'
+      }
+    });
 
-  return usersFac;
+    usersFac.friends = $resource(baseURL + "users/:id/friends/:friendId", { id: '@id', friendId: '@friendId' }, {
+      'update': { 
+        method: 'PUT' 
+      }
+    });
 
-}])
+    return usersFac;
 
-.factory('$localStorage', ['$window', function($window) {
+  }])
 
-  return {
-    store: function(key, value) {
-      $window.localStorage[key] = value;
-    },
-    get: function(key, defaultValue) {
-      return $window.localStorage[key] || defaultValue;
-    },
-    remove: function(key) {
-      $window.localStorage.removeItem(key);
-    },
-    storeObject: function(key, value) {
-      $window.localStorage[key] = JSON.stringify(value);
-    },
-    getObject: function(key, defaultValue) {
-      return JSON.parse($window.localStorage[key] || defaultValue);
-    }
-  };
-  
-}])
+  .factory('$localStorage', ['$window', function($window) {
 
-.factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
+    return {
+      store: function(key, value) {
+        $window.localStorage[key] = value;
+      },
+      get: function(key, defaultValue) {
+        return $window.localStorage[key] || defaultValue;
+      },
+      remove: function(key) {
+        $window.localStorage.removeItem(key);
+      },
+      storeObject: function(key, value) {
+        $window.localStorage[key] = JSON.stringify(value);
+      },
+      getObject: function(key, defaultValue) {
+        return JSON.parse($window.localStorage[key] || defaultValue);
+      }
+    };
     
-  var authFac = {};
-  var TOKEN_KEY = 'Token';
-  var isAuthenticated = false;
-  var username = '';
-  var userid = '';
-  var authToken;
-    
+  }])
 
-  function loadUserCredentials() {
-    var credentials = $localStorage.getObject(TOKEN_KEY,'{}');
-    if (credentials.username !== undefined) {
+  .factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
+      
+    var authFac = {};
+    var TOKEN_KEY = 'Token';
+    var isAuthenticated = false;
+    var username = '';
+    var userid = '';
+    var authToken;
+      
+
+    function loadUserCredentials() {
+      var credentials = $localStorage.getObject(TOKEN_KEY,'{}');
+      if (credentials.username !== undefined) {
+        useCredentials(credentials);
+      }
+    }
+   
+    function storeUserCredentials(credentials) {
+      $localStorage.storeObject(TOKEN_KEY, credentials);
       useCredentials(credentials);
     }
-  }
- 
-  function storeUserCredentials(credentials) {
-    $localStorage.storeObject(TOKEN_KEY, credentials);
-    useCredentials(credentials);
-  }
- 
-  function useCredentials(credentials) {
-    isAuthenticated = true;
-    username = credentials.username;
-    userid = credentials.userid;
-    authToken = credentials.token;
- 
-    // Set the token as header for your requests!
-    $http.defaults.headers.common['x-access-token'] = authToken;
-  }
- 
-  function destroyUserCredentials() {
-    authToken = undefined;
-    username = '';
-    userid = '';
-    isAuthenticated = false;
-    $http.defaults.headers.common['x-access-token'] = authToken;
-    $localStorage.remove(TOKEN_KEY);
-  }
-     
-  authFac.login = function(loginData) {
+   
+    function useCredentials(credentials) {
+      isAuthenticated = true;
+      username = credentials.username;
+      userid = credentials.userid;
+      authToken = credentials.token;
+   
+      // Set the token as header for your requests!
+      $http.defaults.headers.common['x-access-token'] = authToken;
+    }
+   
+    function destroyUserCredentials() {
+      authToken = undefined;
+      username = '';
+      userid = '';
+      isAuthenticated = false;
+      $http.defaults.headers.common['x-access-token'] = authToken;
+      $localStorage.remove(TOKEN_KEY);
+    }
+       
+    authFac.login = function(loginData) {
+        
+      $resource(baseURL + "users/login")
+        .save(loginData,
+          function(response) {
+            storeUserCredentials({ username: loginData.username, token: response.token, userid: response.userid });
+            // console.log(response);
+            $rootScope.$broadcast('login:Successful');
+          },
+          function(response){
+            isAuthenticated = false;
+            // console.log(response);
+            var message = '\
+              <div class="ngdialog-message">\
+              <div><h3>Login Unsuccessful</h3></div>' +
+                '<div><p>' + response.data.err.message + '</p><p>' +
+                response.data.err.name + '</p></div>' +
+              '<div class="ngdialog-buttons">\
+                <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm("OK")>OK</button>\
+              </div>';
+          
+              ngDialog.openConfirm({ template: message, plain: 'true'});
+           }
+        );
+      };
       
-    $resource(baseURL + "users/login")
-      .save(loginData,
-        function(response) {
-          storeUserCredentials({ username: loginData.username, token: response.token, userid: response.userid });
-          // console.log(response);
-          $rootScope.$broadcast('login:Successful');
-        },
-        function(response){
-          isAuthenticated = false;
-          // console.log(response);
-          var message = '\
-            <div class="ngdialog-message">\
-            <div><h3>Login Unsuccessful</h3></div>' +
-              '<div><p>' + response.data.err.message + '</p><p>' +
-              response.data.err.name + '</p></div>' +
-            '<div class="ngdialog-buttons">\
-              <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm("OK")>OK</button>\
-            </div>';
-        
-            ngDialog.openConfirm({ template: message, plain: 'true'});
-         }
-      );
-    };
-    
-    authFac.logout = function() {
-      $resource(baseURL + "users/logout").get(function(response) {});
-      destroyUserCredentials();
-    };
-    
-    authFac.register = function(registerData) {
-        
-      $resource(baseURL + "users/register")
-      .save(registerData,
-        function(response) {
-          authFac.login({username:registerData.username, password:registerData.password});
-          if (registerData.rememberMe) {
-            $localStorage.storeObject('userinfo', {username:registerData.username, password:registerData.password});
+      authFac.logout = function() {
+        $resource(baseURL + "users/logout").get(function(response) {});
+        destroyUserCredentials();
+      };
+      
+      authFac.register = function(registerData) {
+          
+        $resource(baseURL + "users/register")
+        .save(registerData,
+          function(response) {
+            authFac.login({username:registerData.username, password:registerData.password});
+            if (registerData.rememberMe) {
+              $localStorage.storeObject('userinfo', {username:registerData.username, password:registerData.password});
+            }
+            $rootScope.$broadcast('registration:Successful');
+          },
+          function(response) {
+            var message = '\
+              <div class="ngdialog-message">\
+              <div><h3>Registration Unsuccessful</h3></div>' +
+              '<div><p>' +  response.data.err.message + 
+              '</p><p>' + response.data.err.name + '</p></div>';
+              ngDialog.openConfirm({ template: message, plain: 'true'});
           }
-          $rootScope.$broadcast('registration:Successful');
-        },
-        function(response) {
-          var message = '\
-            <div class="ngdialog-message">\
-            <div><h3>Registration Unsuccessful</h3></div>' +
-            '<div><p>' +  response.data.err.message + 
-            '</p><p>' + response.data.err.name + '</p></div>';
-            ngDialog.openConfirm({ template: message, plain: 'true'});
-        }
-      );
-    };
-    
-    authFac.isAuthenticated = function() {
-      return isAuthenticated;
-    };
-    
-    authFac.getUsername = function() {
-      return username;  
-    };
+        );
+      };
+      
+      authFac.isAuthenticated = function() {
+        return isAuthenticated;
+      };
+      
+      authFac.getUsername = function() {
+        return username;  
+      };
 
-    authFac.getUserId = function() {
-      return userid;  
-    };    
+      authFac.getUserId = function() {
+        return userid;  
+      };    
 
-    loadUserCredentials();
-    
-    return authFac;
-    
-}])
-;
+      loadUserCredentials();
+      
+      return authFac;
+      
+  }])
+  ;
+
+})();
