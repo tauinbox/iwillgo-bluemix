@@ -24,14 +24,13 @@ gulp.task('jshint', function() {
 });
 
 
-// Replace baseURL into the production folder
 gulp.task('usemin',['jshint'], function () {
   return gulp.src('./app/**/*.html')
       .pipe(usemin({
         css:[minifycss(),rev()],
         js: [ngannotate(),uglify(),rev()]
       }))
-      .pipe(replace('http://localhost:3000/', 'http://iwillgo.mybluemix.net/'))
+      .pipe(replace('http://localhost:3000/', 'http://iwillgo.mybluemix.net/')) // Replace baseURL from local to production
       .pipe(gulp.dest('dist/'));
 });
 
