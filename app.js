@@ -63,7 +63,7 @@ db.once('open', function () {
             ageRestrict: 18,
             place: {
               address: 'Fulhadhoo, Maldives',
-              loc: { type: "Point", coordinates: [72.928663, 4.884902] }
+              loc: { type: "Point", coordinates: [72.928663, 4.884902] } // longitude, latitude
             },
             comments: [{
               body: 'The first comment', 
@@ -100,7 +100,7 @@ db.once('open', function () {
             createdBy: user._id,
             place: {
               address: 'National Exhibition Centre (NEC) Birmingham, England',
-              loc: { type: "Point", coordinates: [-1.719444, 52.453333] }
+              loc: { type: "Point", coordinates: [-1.719444, 52.453333] } // longitude, latitude
             }
           });      
 
