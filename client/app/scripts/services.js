@@ -5,8 +5,8 @@
   angular.module('iwgApp')
   .constant("baseURL", "http://localhost:3000/")
 
-  .factory('eventsFactory', ['$resource', '$rootScope', 'baseURL', function($resource, $rootScope, baseURL) {
-    var eventsFac = {};
+  .service('eventsFactory', ['$resource', '$rootScope', 'baseURL', function($resource, $rootScope, baseURL) {
+    var eventsFac = this;
 
     eventsFac.events = $resource(baseURL + "events/:id", null, {
       'update': {
@@ -34,8 +34,6 @@
       );
     };
 
-    return eventsFac;
-
   }])
 
   .factory('commentsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
@@ -48,7 +46,7 @@
 
   }])
 
-  .factory('usersFactory', ['$resource', 'baseURL', 'AuthFactory', function($resource, baseURL, AuthFactory) {
+  .factory('usersFactory', ['$resource', 'baseURL', 'authFactory', function($resource, baseURL, authFactory) {
 
     var usersFac = {};
 
@@ -90,7 +88,7 @@
     
   }])
 
-  .factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
+  .factory('authFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
       
     var authFac = {};
     var TOKEN_KEY = 'Token';

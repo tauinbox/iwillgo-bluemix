@@ -2,7 +2,7 @@
   
   'use strict';
 
-  angular.module('iwgApp', ['ui.router', 'ui.bootstrap', 'ngResource', 'ngDialog', 'ngMap'])
+  angular.module('iwgApp')
     .config(function($stateProvider, $urlRouterProvider) {
       $stateProvider
 
