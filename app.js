@@ -28,8 +28,8 @@ db.once('open', function () {
 
   // DB seeding --------------------------
 
-  db.collection('events').drop(function () {
-    db.collection('users').drop(function () {
+  db.collection('users').drop(function () {
+    db.collection('events').drop(function () {
 
       // create the Admin user
       User.register(new User({ username: "admin", admin: true, firstname: "Admin", lastname: "Admin", status: "@work" }), "password", function(err, user) {
