@@ -29,6 +29,7 @@
         },
         function(response) {
           $scope.message = "Error: " + response.status + " " + response.statusText;
+          console.log($scope.message);
         }
     );
 
