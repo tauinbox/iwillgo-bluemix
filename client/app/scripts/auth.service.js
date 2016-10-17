@@ -3,90 +3,6 @@
   'use strict';
 
   angular.module('iwgApp')
-  .constant("baseURL", "http://localhost:3000/")
-
-  .service('eventsFactory', ['$resource', '$rootScope', 'baseURL', function($resource, $rootScope, baseURL) {
-    var eventsFac = this;
-
-    eventsFac.events = $resource(baseURL + "events/:id", null, {
-      'update': {
-        method: 'PUT'
-      }
-    });
-
-    eventsFac.iWillGo = function(eventid, userid) {
-      eventsFac.events.get({id: eventid}).$promise.then(
-        function(response) {
-          for(var i=0; i<response.joined.length; i++) {
-            if(response.joined[i] == userid) {
-              console.log("Already joined");
-              return;
-            }
-          }
-          response.joined.push(userid);
-          eventsFac.events.update({id: eventid}, response, function(response) {
-            $rootScope.$broadcast('user:Added');
-          });
-        },
-        function(response) {
-          $scope.message = "Error: " + response.status + " " + response.statusText;
-        }
-      );
-    };
-
-  }])
-
-  .factory('commentsFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-
-    return $resource(baseURL + "events/:id/comments/:commentId", {id: "@id", commentId: "@commentId"}, {
-      'update': {
-        method: 'PUT'
-      }
-    });
-
-  }])
-
-  .factory('usersFactory', ['$resource', 'baseURL', 'authFactory', function($resource, baseURL, authFactory) {
-
-    var usersFac = {};
-
-    usersFac.users = $resource(baseURL + "users/:id", null, {
-      'update': {
-        method: 'PUT'
-      }
-    });
-
-    usersFac.friends = $resource(baseURL + "users/:id/friends/:friendId", { id: '@id', friendId: '@friendId' }, {
-      'update': { 
-        method: 'PUT' 
-      }
-    });
-
-    return usersFac;
-
-  }])
-
-  .factory('$localStorage', ['$window', function($window) {
-
-    return {
-      store: function(key, value) {
-        $window.localStorage[key] = value;
-      },
-      get: function(key, defaultValue) {
-        return $window.localStorage[key] || defaultValue;
-      },
-      remove: function(key) {
-        $window.localStorage.removeItem(key);
-      },
-      storeObject: function(key, value) {
-        $window.localStorage[key] = JSON.stringify(value);
-      },
-      getObject: function(key, defaultValue) {
-        return JSON.parse($window.localStorage[key] || defaultValue);
-      }
-    };
-    
-  }])
 
   .factory('authFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
       
@@ -199,7 +115,6 @@
       
       return authFac;
       
-  }])
-  ;
+  }]);
 
 })();
